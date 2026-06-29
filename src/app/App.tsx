@@ -477,7 +477,7 @@ function Hero() {
 
       <div className="relative flex-1 flex flex-col lg:flex-row w-full">
         {/* Left: text */}
-        <div className="relative z-10 w-full lg:w-1/2 px-5 lg:pl-40 lg:pr-12 py-16 lg:py-0 flex flex-col justify-center order-1">
+        <div className="relative z-10 w-full lg:w-1/2 px-5 lg:pl-40 lg:pr-12 py-12 lg:py-0 flex flex-col justify-center order-1">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -566,7 +566,7 @@ function Hero() {
         </div>
 
         {/* Right: photo */}
-        <div className="relative w-full lg:w-1/2 order-1 lg:order-2 flex-shrink-0 overflow-hidden h-[50vh] lg:h-screen group">
+        <div className="relative w-full lg:w-1/2 order-1 lg:order-2 flex-shrink-0 overflow-hidden h-[480px] lg:h-screen group">
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
@@ -576,7 +576,7 @@ function Hero() {
             <img
               src="/foto-profil.png"
               alt="Profile"
-              className="w-full h-full object-cover object-[center_45%] pointer-events-none brightness-[0.5] contrast-[0.95] saturate-[0.85] transition-[filter] duration-300 group-hover:brightness-[1.0] group-hover:contrast-[1.0] group-hover:saturate-[1.0] breathe-glow"
+              className="w-full h-full object-cover object-[center_40%] pointer-events-none brightness-[0.5] contrast-[0.95] saturate-[0.85] transition-[filter] duration-300 group-hover:brightness-[1.0] group-hover:contrast-[1.0] group-hover:saturate-[1.0] breathe-glow"
             />
           </motion.div>
         </div>
