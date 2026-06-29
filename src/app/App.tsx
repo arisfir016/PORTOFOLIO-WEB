@@ -569,7 +569,7 @@ function Hero() {
           <img
             src="/foto-profil.png"
             alt=""
-            className="absolute inset-0 w-full h-full object-cover object-[center_20%] opacity-40 mix-blend-screen pointer-events-none"
+            className="absolute inset-0 w-full h-full object-cover object-top opacity-40 mix-blend-screen pointer-events-none"
           />
         </div>
 
