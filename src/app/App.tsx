@@ -219,10 +219,10 @@ const PROJECTS = [
     grad: "from-blue-500/20 to-indigo-700/20", accent: "#3b82f6",
   },
   {
-    id: 2, name: "Task Management Hub", category: "fullstack" as const,
-    description: "A collaborative task management tool that handles real time updates. Built to manage team workflows with a focus on data synchronization.",
-    tech: ["Next.js", "Node.js", "WebSockets", "MongoDB"],
-    grad: "from-cyan-500/20 to-blue-700/20", accent: "#00f5ff",
+    id: 2, name: "Kalkulator HPP UMKM", category: "fullstack" as const,
+    description: "Aplikasi web untuk menghitung Harga Pokok Penjualan (HPP) produk UMKM. Memudahkan pelaku usaha kecil menengah dalam menentukan harga jual yang tepat berdasarkan biaya bahan, tenaga kerja, dan overhead.",
+    tech: ["React", "Node.js", "PostgreSQL", "Tailwind CSS"],
+    grad: "from-emerald-500/20 to-teal-700/20", accent: "#10b981",
   },
   {
     id: 3, name: "Portfolio Website", category: "frontend" as const,
