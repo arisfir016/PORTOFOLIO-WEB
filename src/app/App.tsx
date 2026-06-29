@@ -462,123 +462,161 @@ function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col pt-20 overflow-hidden"
+      className="relative min-h-screen overflow-hidden"
     >
-      {/* Full-screen grid layer at the very bottom */}
+      {/* Shared background layers */}
+      <ThreeScene />
       <div className="absolute inset-0 pointer-events-none grid-dots" />
-
-      {/* Background glows */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] rounded-full bg-[#00f5ff]/4 blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-[#a855f7]/5 blur-3xl" />
       </div>
 
-      <ThreeScene />
-
-      <div className="relative flex-1 flex flex-col lg:flex-row w-full">
-        {/* Left: text */}
-        <div className="relative z-10 w-full lg:w-1/2 px-5 lg:pl-40 lg:pr-12 py-12 lg:py-0 flex flex-col justify-center order-1">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex items-center gap-2 mb-5"
-          >
-            <span className="w-8 h-px bg-[#00f5ff]" />
-            <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">
-              Hello, I'm
-            </span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-5xl sm:text-8xl lg:text-9xl font-display font-extrabold tracking-tight leading-[1.15] mb-6 pt-4"
-          >
-            <span
-              className="glitch-wrap text-white"
-              data-text="ARIS"
+      {/* ===== DESKTOP (untouched) ===== */}
+      <div className="hidden lg:block h-full">
+        <div className="relative flex-1 flex flex-row w-full min-h-screen">
+          <div className="relative z-10 w-1/2 pl-40 pr-12 py-0 flex flex-col justify-center">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="flex items-center gap-2 mb-5"
             >
+              <span className="w-8 h-px bg-[#00f5ff]" />
+              <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">
+                Hello, I'm
+              </span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-8xl lg:text-9xl font-display font-extrabold tracking-tight leading-[1.15] mb-6 pt-4"
+            >
+              <span className="glitch-wrap text-white" data-text="ARIS">ARIS</span>
+              <br />
+              <span className="glitch-wrap font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] via-[#3b82f6] to-[#a855f7] pr-[0.15em]" data-text="FIRMANSYAH">FIRMANSYAH</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.55 }}
+              className="font-mono text-[#00f5ff]/75 text-lg mb-8 min-h-[28px]"
+            >
+              {typed}
+              <span className="cursor-blink text-[#00f5ff]">|</span>
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="text-white/45 text-lg max-w-lg leading-relaxed mb-10"
+            >
+              I write clean, maintainable code and build web applications that work well, from responsive frontends to reliable backend services. I focus on practical solutions, not trends.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.85 }}
+              className="flex flex-wrap gap-4"
+            >
+              <a href="#projects" className="group flex items-center gap-2 px-6 py-3 bg-[#00f5ff] text-[#050505] font-bold rounded-xl text-sm hover:bg-[#00f5ff]/90 hover:shadow-[0_0_36px_#00f5ff50] hover:-translate-y-0.5 transition-all duration-200">
+                View Projects
+                <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+              </a>
+              <a href="#contact" className="flex items-center gap-2 px-6 py-3 border border-white/15 text-white/70 font-medium rounded-xl text-sm hover:border-[#a855f7]/60 hover:text-[#a855f7] hover:shadow-[0_0_24px_#a855f720] hover:-translate-y-0.5 transition-all duration-200">
+                <Download size={15} />
+                Download CV
+              </a>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.1 }}
+              className="mt-14 flex items-center gap-1.5 text-white/25 font-mono text-xs"
+            >
+              <ChevronDown size={13} className="animate-bounce" />
+              scroll down
+            </motion.div>
+          </div>
+
+          <div className="relative w-1/2 flex-shrink-0 overflow-hidden h-screen group">
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
+              className="absolute inset-0 bottom-0"
+            >
+              <img
+                src="/foto-profil.png"
+                alt="Profile"
+                className="w-full h-full object-cover object-[center_40%] pointer-events-none brightness-[0.5] contrast-[0.95] saturate-[0.85] transition-[filter] duration-300 group-hover:brightness-[1.0] group-hover:contrast-[1.0] group-hover:saturate-[1.0] breathe-glow"
+              />
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* ===== MOBILE (redesigned) ===== */}
+      <div className="block lg:hidden w-full min-h-screen relative overflow-hidden bg-black text-white px-6 pt-24 pb-12 flex flex-col justify-between">
+        {/* Full bleed cinematic background */}
+        <div className="absolute inset-0 z-0 w-full h-full">
+          <img
+            src="/foto-profil.png"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover object-center opacity-40 mix-blend-screen pointer-events-none"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/80 to-black pointer-events-none z-[5]" />
+
+        {/* Main content */}
+        <div className="relative z-10 space-y-6 mt-auto mb-6">
+          <div>
+            <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">Hello, I'm</span>
+            <h1 className="text-4xl font-extrabold tracking-tighter leading-none mt-2 text-white">
               ARIS
-            </span>
-            <br />
-            <span
-              className="glitch-wrap font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] via-[#3b82f6] to-[#a855f7] pr-[0.15em]"
-              data-text="FIRMANSYAH"
-            >
-              FIRMANSYAH
-            </span>
-          </motion.h1>
+              <br />
+              <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] via-[#3b82f6] to-[#a855f7]">
+                FIRMANSYAH
+              </span>
+            </h1>
+          </div>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.55 }}
-            className="font-mono text-[#00f5ff]/75 text-lg mb-8 min-h-[28px]"
-          >
+          <p className="font-mono text-[#00f5ff]/75 text-base min-h-[24px]">
             {typed}
             <span className="cursor-blink text-[#00f5ff]">|</span>
-          </motion.p>
+          </p>
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            className="text-white/45 text-base sm:text-lg max-w-lg leading-relaxed mb-10"
-          >
-            I write clean, maintainable code and build web applications that
-            work well, from responsive frontends to reliable backend services.
-            I focus on practical solutions, not trends.
-          </motion.p>
+          <p className="text-white/40 text-sm leading-relaxed">
+            I write clean, maintainable code and build web applications that work well, from responsive frontends to reliable backend services.
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.85 }}
-            className="flex flex-wrap gap-4"
-          >
+          <div className="space-y-3 pt-4">
             <a
               href="#projects"
-              className="group flex items-center gap-2 px-6 py-3 bg-[#00f5ff] text-[#050505] font-bold rounded-xl text-sm hover:bg-[#00f5ff]/90 hover:shadow-[0_0_36px_#00f5ff50] hover:-translate-y-0.5 transition-all duration-200"
+              className="block w-full bg-white text-black font-semibold rounded-full py-4 text-sm tracking-widest uppercase text-center transition-all duration-300 shadow-lg shadow-white/10"
             >
               View Projects
-              <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
             </a>
             <a
               href="#contact"
-              className="flex items-center gap-2 px-6 py-3 border border-white/15 text-white/70 font-medium rounded-xl text-sm hover:border-[#a855f7]/60 hover:text-[#a855f7] hover:shadow-[0_0_24px_#a855f720] hover:-translate-y-0.5 transition-all duration-200"
+              className="flex items-center justify-center gap-2 w-full bg-transparent text-white border border-slate-800 font-semibold rounded-full py-4 text-sm tracking-widest uppercase text-center transition-all duration-300 backdrop-blur-md"
             >
-              <Download size={15} />
+              <Download size={14} />
               Download CV
             </a>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.1 }}
-            className="mt-14 flex items-center gap-1.5 text-white/25 font-mono text-xs"
-          >
-            <ChevronDown size={13} className="animate-bounce" />
-            scroll down
-          </motion.div>
+          </div>
         </div>
 
-        {/* Right: photo */}
-        <div className="relative w-full lg:w-1/2 order-1 lg:order-2 flex-shrink-0 overflow-hidden h-[480px] lg:h-screen group -mt-32 lg:mt-0">
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
-            className="absolute inset-0 bottom-0"
-          >
-            <img
-              src="/foto-profil.png"
-              alt="Profile"
-              className="w-full h-full object-cover object-[center_40%] pointer-events-none brightness-[0.5] contrast-[0.95] saturate-[0.85] transition-[filter] duration-300 group-hover:brightness-[1.0] group-hover:contrast-[1.0] group-hover:saturate-[1.0] breathe-glow"
-            />
-          </motion.div>
+        {/* Bottom scroll indicator */}
+        <div className="relative z-10 flex items-center gap-1.5 text-white/25 font-mono text-xs">
+          <ChevronDown size={13} className="animate-bounce" />
+          scroll down
         </div>
       </div>
     </section>
