@@ -502,7 +502,7 @@ function Hero() {
             </span>
             <br />
             <span
-              className="glitch-wrap font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] via-[#3b82f6] to-[#a855f7]"
+              className="glitch-wrap font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] via-[#3b82f6] to-[#a855f7] pr-[0.15em]"
               data-text="FIRMANSYAH"
             >
               FIRMANSYAH
