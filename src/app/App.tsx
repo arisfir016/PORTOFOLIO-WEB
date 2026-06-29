@@ -566,7 +566,7 @@ function Hero() {
         </div>
 
         {/* Right: photo */}
-        <div className="relative w-full lg:w-1/2 order-1 lg:order-2 flex-shrink-0 overflow-hidden h-[480px] lg:h-screen group">
+        <div className="relative w-full lg:w-1/2 order-1 lg:order-2 flex-shrink-0 overflow-hidden h-[480px] lg:h-screen group -mt-10 lg:mt-0">
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
