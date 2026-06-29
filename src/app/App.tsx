@@ -767,25 +767,24 @@ function About() {
 function Skills() {
   const [tab, setTab] = useState<keyof typeof SKILLS>("frontend");
   const tabs = Object.keys(SKILLS) as (keyof typeof SKILLS)[];
-  const innerRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const isPausedRef = useRef(false);
-  const xRef = useRef(0);
 
   useEffect(() => {
-    const el = innerRef.current;
+    const el = scrollRef.current;
     if (!el) return;
 
     let rafId: number;
-    const speed = 1;
 
     const tick = () => {
       if (!isPausedRef.current) {
-        xRef.current -= speed;
-        const half = el.scrollWidth / 2;
-        if (Math.abs(xRef.current) >= half) {
-          xRef.current += half;
+        el.style.scrollSnapType = "none";
+        el.scrollLeft += 0.6;
+        if (el.scrollLeft >= (el.scrollWidth - el.clientWidth) / 2) {
+          el.scrollLeft = 0;
         }
-        el.style.transform = `translate3d(${xRef.current}px, 0, 0)`;
+      } else {
+        el.style.scrollSnapType = "x mandatory";
       }
       rafId = requestAnimationFrame(tick);
     };
@@ -1020,17 +1019,15 @@ function Skills() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
           >
-            <div className="overflow-hidden -mx-4 px-4 pb-4">
-              <div
-                ref={innerRef}
-                onTouchStart={() => { isPausedRef.current = true; }}
-                onTouchEnd={() => { isPausedRef.current = false; }}
-                onMouseDown={() => { isPausedRef.current = true; }}
-                onMouseUp={() => { isPausedRef.current = false; }}
-                onMouseLeave={() => { isPausedRef.current = false; }}
-                className="flex gap-4"
-                style={{ willChange: "transform" }}
-              >
+            <div
+              ref={scrollRef}
+              onTouchStart={() => { isPausedRef.current = true; }}
+              onTouchEnd={() => { isPausedRef.current = false; }}
+              onMouseDown={() => { isPausedRef.current = true; }}
+              onMouseUp={() => { isPausedRef.current = false; }}
+              onMouseLeave={() => { isPausedRef.current = false; }}
+              className="flex flex-row overflow-x-auto snap-x snap-mandatory gap-4 pb-4 scrollbar-none -mx-4 px-4"
+            >
               {[...SKILLS[tab], ...SKILLS[tab]].map((skill, i) => {
                 const color = SKILL_COLORS[i % SKILL_COLORS.length];
                 const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
@@ -1041,12 +1038,12 @@ function Skills() {
                     initial={{ opacity: 0, y: 16, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ delay: (i % SKILLS[tab].length) * 0.04, duration: 0.3 }}
-                    className="w-[190px] flex-shrink-0"
+                    className="w-[155px] flex-shrink-0 snap-center"
                   >
                     <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-full">
                       <div className="relative mb-4">
                         <SkillRing level={skill.level} color={color} />
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                           {IconComp ? (
                             <IconComp className="w-7 h-7" style={{ color }} />
                           ) : (
@@ -1061,7 +1058,6 @@ function Skills() {
                   </motion.div>
                 );
               })}
-            </div>
             </div>
           </motion.div>
 
