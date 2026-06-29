@@ -810,62 +810,81 @@ function Skills() {
             </div>
 
             {/* Skill cards - infinite marquee */}
-             <div className="overflow-hidden mask-edges py-8">
-               <div className="flex w-max marquee-scroll marquee-pause">
-                 <div className="flex flex-shrink-0">
-                   {SKILLS[tab].map((skill, i) => {
-                     const color = SKILL_COLORS[i % SKILL_COLORS.length];
-                     const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
-                     const IconComp = SKILL_ICONS[skill.name];
-                     return (
-                         <div key={skill.name} className="flex-shrink-0 mr-8" data-card>
-                           <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-[190px]">
-                             <div className="relative mb-4">
-                               <SkillRing level={skill.level} color={color} />
-                               <div className="absolute inset-0 flex items-center justify-center">
-                                 {IconComp ? (
-                                   <IconComp className="w-7 h-7" style={{ color }} />
-                                 ) : (
-                                   <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
-                                 )}
+             <motion.div
+               key={tab}
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.35, ease: "easeOut" }}
+             >
+               <div className="overflow-hidden mask-edges py-8">
+                 <div className="flex w-max marquee-scroll marquee-pause">
+                   <div className="flex flex-shrink-0">
+                     {SKILLS[tab].map((skill, i) => {
+                       const color = SKILL_COLORS[i % SKILL_COLORS.length];
+                       const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
+                       const IconComp = SKILL_ICONS[skill.name];
+                       return (
+                           <motion.div
+                             key={skill.name}
+                             initial={{ opacity: 0, y: 16, scale: 0.95 }}
+                             animate={{ opacity: 1, y: 0, scale: 1 }}
+                             transition={{ delay: i * 0.04, duration: 0.3 }}
+                             className="flex-shrink-0 mr-8" data-card
+                           >
+                             <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-[190px]">
+                               <div className="relative mb-4">
+                                 <SkillRing level={skill.level} color={color} />
+                                 <div className="absolute inset-0 flex items-center justify-center">
+                                   {IconComp ? (
+                                     <IconComp className="w-7 h-7" style={{ color }} />
+                                   ) : (
+                                     <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
+                                   )}
+                                 </div>
                                </div>
-                             </div>
-                             <p className="text-white text-base font-semibold leading-snug mb-1">{skill.name}</p>
-                             <p className="font-mono text-sm font-bold mb-3" style={{ color }}>{skill.level}%</p>
-                             <span className="font-mono text-[11px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
-                           </TiltCard>
-                         </div>
-                     );
-                   })}
-                 </div>
-                 <div className="flex flex-shrink-0">
-                   {SKILLS[tab].map((skill, i) => {
-                     const color = SKILL_COLORS[i % SKILL_COLORS.length];
-                     const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
-                     const IconComp = SKILL_ICONS[skill.name];
-                     return (
-                         <div key={`dup-${skill.name}`} className="flex-shrink-0 mr-8" data-card>
-                           <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-[190px]">
-                             <div className="relative mb-4">
-                               <SkillRing level={skill.level} color={color} />
-                               <div className="absolute inset-0 flex items-center justify-center">
-                                 {IconComp ? (
-                                   <IconComp className="w-7 h-7" style={{ color }} />
-                                 ) : (
-                                   <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
-                                 )}
+                               <p className="text-white text-base font-semibold leading-snug mb-1">{skill.name}</p>
+                               <p className="font-mono text-sm font-bold mb-3" style={{ color }}>{skill.level}%</p>
+                               <span className="font-mono text-[11px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
+                             </TiltCard>
+                           </motion.div>
+                       );
+                     })}
+                   </div>
+                   <div className="flex flex-shrink-0">
+                     {SKILLS[tab].map((skill, i) => {
+                       const color = SKILL_COLORS[i % SKILL_COLORS.length];
+                       const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
+                       const IconComp = SKILL_ICONS[skill.name];
+                       return (
+                           <motion.div
+                             key={`dup-${skill.name}`}
+                             initial={{ opacity: 0, y: 16, scale: 0.95 }}
+                             animate={{ opacity: 1, y: 0, scale: 1 }}
+                             transition={{ delay: i * 0.04 + 0.15, duration: 0.3 }}
+                             className="flex-shrink-0 mr-8" data-card
+                           >
+                             <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-[190px]">
+                               <div className="relative mb-4">
+                                 <SkillRing level={skill.level} color={color} />
+                                 <div className="absolute inset-0 flex items-center justify-center">
+                                   {IconComp ? (
+                                     <IconComp className="w-7 h-7" style={{ color }} />
+                                   ) : (
+                                     <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
+                                   )}
+                                 </div>
                                </div>
-                             </div>
-                             <p className="text-white text-base font-semibold leading-snug mb-1">{skill.name}</p>
-                             <p className="font-mono text-sm font-bold mb-3" style={{ color }}>{skill.level}%</p>
-                             <span className="font-mono text-[11px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
-                           </TiltCard>
-                         </div>
-                     );
-                   })}
+                               <p className="text-white text-base font-semibold leading-snug mb-1">{skill.name}</p>
+                               <p className="font-mono text-sm font-bold mb-3" style={{ color }}>{skill.level}%</p>
+                               <span className="font-mono text-[11px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
+                             </TiltCard>
+                           </motion.div>
+                       );
+                     })}
+                   </div>
                  </div>
                </div>
-             </div>
+             </motion.div>
 
             {/* Language pill cloud */}
             <motion.div
@@ -893,9 +912,10 @@ function Skills() {
 
           {/* Sidebar — 4 cols */}
           <motion.div
-            initial={{ opacity: 0, x: 28 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            key={tab}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut", delay: 0.1 }}
             className="lg:col-span-4 flex flex-col gap-5"
           >
             {/* Stack Overview */}
@@ -992,14 +1012,19 @@ function Projects() {
         </div>
 
         {/* Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          key={filter}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {visible.map((proj, i) => (
             <motion.div
               key={proj.id}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.09 }}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.07, duration: 0.3 }}
             >
               <TiltCard className="glass rounded-2xl overflow-hidden group hover:border-white/15 transition-colors h-full flex flex-col">
                 {/* Thumbnail */}
@@ -1059,7 +1084,7 @@ function Projects() {
               </TiltCard>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
