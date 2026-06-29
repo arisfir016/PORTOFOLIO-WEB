@@ -492,7 +492,7 @@ function Hero() {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-6xl sm:text-7xl lg:text-8xl font-display font-extrabold tracking-tight leading-none mb-3"
+            className="text-7xl sm:text-8xl lg:text-9xl font-display font-extrabold tracking-tight leading-none mb-4"
           >
             <span
               className="glitch-wrap text-white"
@@ -513,7 +513,7 @@ function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.55 }}
-            className="font-mono text-[#00f5ff]/75 text-base mb-8 min-h-[26px]"
+            className="font-mono text-[#00f5ff]/75 text-lg mb-8 min-h-[28px]"
           >
             {typed}
             <span className="cursor-blink text-[#00f5ff]">|</span>
@@ -523,7 +523,7 @@ function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
-            className="text-white/45 text-lg max-w-md leading-relaxed mb-10"
+            className="text-white/45 text-xl max-w-lg leading-relaxed mb-10"
           >
             I write clean, maintainable code and build web applications that
             work well, from responsive frontends to reliable backend services.
