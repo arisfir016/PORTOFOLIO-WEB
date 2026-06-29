@@ -462,7 +462,7 @@ function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col pt-20 lg:overflow-hidden"
+      className="relative min-h-screen flex flex-col pt-20 overflow-hidden"
     >
       {/* Full-screen grid layer at the very bottom */}
       <div className="absolute inset-0 pointer-events-none grid-dots" />
@@ -629,7 +629,7 @@ function About() {
   ];
 
   return (
-    <section id="about" className="py-14 lg:py-20 relative lg:overflow-hidden">
+    <section id="about" className="py-14 lg:py-20 relative overflow-hidden">
       <ThreeScene variant="torus" particleCount={200} />
       <div className="absolute inset-0 pointer-events-none grid-dots" />
       <div className="absolute inset-0 pointer-events-none">
@@ -795,7 +795,7 @@ function Skills() {
   }, [tab]);
 
   return (
-    <section id="skills" className="py-14 lg:py-20 relative lg:overflow-hidden">
+    <section id="skills" className="py-14 lg:py-20 relative overflow-hidden">
       <ThreeScene variant="icosahedron" particleCount={200} />
       <div className="absolute inset-0 grid-dots pointer-events-none" />
       <div className="absolute inset-0 pointer-events-none">
@@ -1132,7 +1132,7 @@ function Projects() {
   const visible = filter === "all" ? PROJECTS : PROJECTS.filter((p) => p.category === filter);
 
   return (
-    <section id="projects" className="py-14 lg:py-20 relative lg:overflow-hidden">
+    <section id="projects" className="py-14 lg:py-20 relative overflow-hidden">
       <div className="absolute inset-0 translate-y-[-60px]">
         <ThreeScene variant="octahedron" particleCount={200} />
       </div>
@@ -1257,7 +1257,7 @@ function Projects() {
 
 function Journey() {
   return (
-    <section id="journey" className="py-14 lg:py-20 relative lg:overflow-hidden">
+    <section id="journey" className="py-14 lg:py-20 relative overflow-hidden">
       <div className="absolute inset-0 translate-y-[-60px]">
         <ThreeScene variant="torusKnot" particleCount={200} />
       </div>
@@ -1397,7 +1397,7 @@ function Contact() {
   ];
 
   return (
-    <section id="contact" className="py-14 lg:py-20 relative lg:overflow-hidden">
+    <section id="contact" className="py-14 lg:py-20 relative overflow-hidden">
       <ThreeScene variant="dodecahedron" particleCount={200} />
       <div className="absolute inset-0 pointer-events-none grid-dots" />
       <div className="absolute inset-0 pointer-events-none">
