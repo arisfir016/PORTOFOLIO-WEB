@@ -767,6 +767,32 @@ function About() {
 function Skills() {
   const [tab, setTab] = useState<keyof typeof SKILLS>("frontend");
   const tabs = Object.keys(SKILLS) as (keyof typeof SKILLS)[];
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const isPausedRef = useRef(false);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    let rafId: number;
+
+    const scroll = () => {
+      if (!isPausedRef.current) {
+        el.style.scrollSnapType = "none";
+        el.scrollLeft += 0.6;
+        if (el.scrollLeft >= (el.scrollWidth - el.clientWidth) / 2) {
+          el.scrollLeft = 0;
+        }
+      } else {
+        el.style.scrollSnapType = "x mandatory";
+      }
+      rafId = requestAnimationFrame(scroll);
+    };
+
+    rafId = requestAnimationFrame(scroll);
+
+    return () => cancelAnimationFrame(rafId);
+  }, [tab]);
 
   return (
     <section id="skills" className="py-14 lg:py-20 relative overflow-hidden">
@@ -986,24 +1012,32 @@ function Skills() {
             ))}
           </div>
 
-          {/* Skill cards - horizontal swipeable carousel */}
+          {/* Skill cards - auto scroll marquee */}
           <motion.div
             key={tab}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
           >
-            <div className="flex flex-row overflow-x-auto snap-x snap-mandatory gap-4 pb-4 scrollbar-none -mx-4 px-4">
-              {SKILLS[tab].map((skill, i) => {
+            <div
+              ref={scrollRef}
+              onTouchStart={() => { isPausedRef.current = true; }}
+              onTouchEnd={() => { isPausedRef.current = false; }}
+              onMouseDown={() => { isPausedRef.current = true; }}
+              onMouseUp={() => { isPausedRef.current = false; }}
+              onMouseLeave={() => { isPausedRef.current = false; }}
+              className="flex flex-row overflow-x-auto snap-x snap-mandatory gap-4 pb-4 scrollbar-none -mx-4 px-4"
+            >
+              {[...SKILLS[tab], ...SKILLS[tab]].map((skill, i) => {
                 const color = SKILL_COLORS[i % SKILL_COLORS.length];
                 const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
                 const IconComp = SKILL_ICONS[skill.name];
                 return (
                   <motion.div
-                    key={skill.name}
+                    key={`${i}-${skill.name}`}
                     initial={{ opacity: 0, y: 16, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ delay: i * 0.04, duration: 0.3 }}
+                    transition={{ delay: (i % SKILLS[tab].length) * 0.04, duration: 0.3 }}
                     className="w-[155px] flex-shrink-0 snap-center"
                   >
                     <TiltCard className="glass py-8 px-4 rounded-2xl cursor-default flex flex-col items-center text-center w-full">
