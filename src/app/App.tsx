@@ -16,15 +16,14 @@ import {
   Menu,
   X,
   Zap,
-  Shield,
   Rocket,
   Cpu,
   MapPin,
   Lightbulb,
 } from "lucide-react";
 import ThreeScene from "./components/ThreeScene";
-import AboutBackground from "./components/AboutBackground";
-import Starfield from "./components/Starfield";
+import emailjs from "@emailjs/browser";
+import { Toaster, toast } from "sonner";
 
 // ─── Global styles ────────────────────────────────────────────────────────────
 const GLOBAL_CSS = `
@@ -51,12 +50,6 @@ const GLOBAL_CSS = `
   }
   @keyframes spin-slow {
     to { transform: rotate(360deg); }
-  }
-  @keyframes neon-flicker {
-    0%,19%,21%,23%,25%,54%,56%,100% {
-      text-shadow: 0 0 8px #00f5ff, 0 0 20px #00f5ff60, 0 0 40px #00f5ff30;
-    }
-    20%,24%,55% { text-shadow: none; }
   }
   @keyframes blink-cursor {
     0%,100% { opacity: 1; }
@@ -115,11 +108,13 @@ const GLOBAL_CSS = `
     z-index: -2;
   }
 
-  .neon-logo  { animation: neon-flicker 5s infinite; }
-  .neon-logo img { filter: drop-shadow(0 0 8px #00f5ff) drop-shadow(0 0 20px #00f5ff60); }
+
   .float-anim { animation: float-y var(--dur,7s) ease-in-out infinite var(--delay,0s); }
   .pulse-glow { animation: pulse-glow 2.5s ease-in-out infinite; }
   .spin-slow  { animation: spin-slow var(--dur,18s) linear infinite; }
+  .neon-logo img { filter: drop-shadow(0 0 8px #00f5ff) drop-shadow(0 0 20px #00f5ff60); }
+  .nav-link:hover { text-shadow: 0 0 8px #00f5ff, 0 0 20px #00f5ff80, 0 0 40px #00f5ff40; }
+  .hire-btn:hover { box-shadow: 0 0 20px #00f5ff40, 0 0 40px #00f5ff20, inset 0 0 20px #00f5ff10; }
   .cursor-blink { animation: blink-cursor 1s step-end infinite; }
   .wobble-hover:hover { animation: wobble 0.4s ease; }
   .shimmer-text {
@@ -200,40 +195,22 @@ const GLOBAL_CSS = `
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const PROJECTS = [
   {
-    id: 1, name: "NexusAI", category: "fullstack" as const,
-    description: "AI-powered code review platform with real-time analysis, automated PR comments, and team collaboration.",
-    tech: ["Next.js", "TypeScript", "Python", "PostgreSQL", "Redis"],
-    grad: "from-cyan-500/20 to-blue-700/20", accent: "#00f5ff",
-  },
-  {
-    id: 2, name: "CryptoVault", category: "frontend" as const,
-    description: "DeFi portfolio tracker with live market data, multi-chain wallets, and P&L analytics dashboard.",
-    tech: ["React", "TypeScript", "Web3.js", "Recharts", "Zustand"],
-    grad: "from-purple-500/20 to-pink-700/20", accent: "#a855f7",
-  },
-  {
-    id: 3, name: "DataStream API", category: "backend" as const,
-    description: "High-throughput event pipeline processing 500K events/sec with exactly-once delivery semantics.",
-    tech: ["Go", "Kafka", "PostgreSQL", "Docker", "Kubernetes"],
+    id: 1, name: "Smart Driving AI", category: "backend" as const,
+    description: "A backend system designed to process sensor data from vehicle cameras. It focuses on object detection logic and logging driving events efficiently.",
+    tech: ["Go", "Python", "OpenCV", "PostgreSQL"],
     grad: "from-blue-500/20 to-indigo-700/20", accent: "#3b82f6",
   },
   {
-    id: 4, name: "CloudDeploy", category: "backend" as const,
-    description: "Zero-downtime automated deployments with health checks, rollback, and multi-region support.",
-    tech: ["Node.js", "Terraform", "AWS", "GitHub Actions", "Docker"],
-    grad: "from-emerald-500/20 to-teal-700/20", accent: "#10b981",
+    id: 2, name: "Task Management Hub", category: "fullstack" as const,
+    description: "A collaborative task management tool that handles real time updates. Built to manage team workflows with a focus on data synchronization.",
+    tech: ["Next.js", "Node.js", "WebSockets", "MongoDB"],
+    grad: "from-cyan-500/20 to-blue-700/20", accent: "#00f5ff",
   },
   {
-    id: 5, name: "PixelForge", category: "fullstack" as const,
-    description: "Real-time collaborative design tool with live cursors, version branching, and component library export.",
-    tech: ["React", "Node.js", "WebSockets", "MongoDB", "Canvas API"],
-    grad: "from-orange-500/20 to-red-700/20", accent: "#f97316",
-  },
-  {
-    id: 6, name: "EcoTrack", category: "fullstack" as const,
-    description: "Corporate sustainability analytics with carbon modeling, ESG reporting, and board-ready dashboards.",
-    tech: ["Next.js", "FastAPI", "Python", "PostgreSQL", "D3.js"],
-    grad: "from-green-500/20 to-cyan-700/20", accent: "#34d399",
+    id: 3, name: "Portfolio Website", category: "frontend" as const,
+    description: "A custom personal portfolio built to showcase my technical projects. Focuses on interactive animations and clean, responsive UI.",
+    tech: ["React", "Tailwind CSS", "Framer Motion"],
+    grad: "from-purple-500/20 to-pink-700/20", accent: "#a855f7",
   },
 ];
 
@@ -262,20 +239,12 @@ const SKILLS = {
 const SKILL_COLORS = ["#00f5ff", "#a855f7", "#3b82f6", "#10b981", "#f97316", "#6366f1"];
 
 const TIMELINE = [
-  { year: "2020", title: "The Spark", side: "left" as const,
-    body: "Wrote first 'Hello, World!' in Python. Got immediately obsessed with understanding how computers actually think." },
-  { year: "2021", title: "Web Foundations", side: "right" as const,
-    body: "Built first interactive websites with HTML, CSS, and vanilla JS. Discovered React and never looked back." },
-  { year: "2022", title: "Backend Awakening", side: "left" as const,
-    body: "Dove deep into Node.js, Python/Flask, and PostgreSQL. Learned REST APIs, JWT auth, and relational database design." },
-  { year: "2023", title: "Polyglot Developer", side: "right" as const,
-    body: "Expanded to Go, Java, and C#. Shipped microservices, event-driven systems, and first production deployments." },
-  { year: "2024", title: "Fullstack Mastery", side: "left" as const,
-    body: "Mastered Next.js, TypeScript, and cloud infrastructure. Delivered 10+ complete products end-to-end." },
-  { year: "2025", title: "Architecture Era", side: "right" as const,
-    body: "Focused on system design, distributed systems, and AI-native application patterns. Mentored junior devs." },
+  { year: "2024", title: "The Beginning", side: "left" as const,
+    body: "Started my coding journey by learning the fundamentals of web development. Focused on HTML, CSS, and basic JavaScript to build simple, functional projects." },
+  { year: "2025", title: "Expanding Skills", side: "right" as const,
+    body: "Shifted to building more complex applications. Started learning React and Node.js while understanding how to connect frontends to backend services." },
   { year: "2026", title: "Present Day", side: "left" as const,
-    body: "Building ambitious platforms, exploring WebAssembly, and staying at the leading edge of the stack." },
+    body: "Currently focused on building fullstack applications, improving code quality, and exploring modern tools to create efficient web solutions." },
 ];
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -319,16 +288,16 @@ function TiltCard({
 }
 
 function SkillRing({ level, color }: { level: number; color: string }) {
-  const r = 30;
+  const r = 36;
   const circ = 2 * Math.PI * r;
   const offset = circ - (level / 100) * circ;
   return (
-    <svg width="72" height="72" className="-rotate-90" aria-hidden="true">
-      <circle cx="36" cy="36" r={r} stroke="rgba(255,255,255,0.07)" strokeWidth="4" fill="none" />
+    <svg width="88" height="88" className="-rotate-90" aria-hidden="true">
+      <circle cx="44" cy="44" r={r} stroke="rgba(255,255,255,0.07)" strokeWidth="5" fill="none" />
       <motion.circle
-        cx="36" cy="36" r={r}
+        cx="44" cy="44" r={r}
         stroke={color}
-        strokeWidth="4"
+        strokeWidth="5"
         fill="none"
         strokeLinecap="round"
         strokeDasharray={circ}
@@ -396,9 +365,9 @@ function useTyping(text: string, delay = 55) {
 // ─── Sections ─────────────────────────────────────────────────────────────────
 
 function Nav({ open, setOpen }: { open: boolean; setOpen: (v: boolean) => void }) {
-  const links = ["About", "Skills", "Projects", "Journey", "Contact"];
+  const links = ["About", "Skills", "Projects", "Journey"];
   return (
-    <nav className="fixed top-0 inset-x-0 z-50 glass border-b border-white/5">
+    <nav className="fixed top-0 inset-x-0 z-50 border-b border-white/5" style={{ background: "rgba(5,5,5,0.85)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)" }}>
       <div className="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
         <motion.span
           initial={{ opacity: 0, x: -16 }}
@@ -421,7 +390,7 @@ function Nav({ open, setOpen }: { open: boolean; setOpen: (v: boolean) => void }
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * i + 0.2 }}
-              className="font-mono text-xs text-white/50 hover:text-[#00f5ff] transition-colors tracking-widest uppercase"
+              className="font-mono text-xs text-white/50 hover:text-[#00f5ff] transition-all tracking-widest uppercase nav-link"
             >
               {l}
             </motion.a>
@@ -431,9 +400,9 @@ function Nav({ open, setOpen }: { open: boolean; setOpen: (v: boolean) => void }
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
-            className="font-mono text-xs px-4 py-2 border border-[#00f5ff]/35 text-[#00f5ff] rounded-lg hover:bg-[#00f5ff]/10 hover:border-[#00f5ff]/70 transition-all tracking-widest uppercase"
+            className="font-mono text-xs px-4 py-2 border border-[#00f5ff]/35 text-[#00f5ff] rounded-lg hover:bg-[#00f5ff]/10 hover:border-[#00f5ff]/70 transition-all tracking-widest uppercase hire-btn"
           >
-            Hire Me
+            Contact
           </motion.a>
         </motion.div>
 
@@ -450,14 +419,15 @@ function Nav({ open, setOpen }: { open: boolean; setOpen: (v: boolean) => void }
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
-          className="md:hidden glass-md border-t border-white/5 px-5 pb-5 flex flex-col gap-3 pt-3"
+          className="md:hidden border-t border-white/5 px-5 pb-5 flex flex-col gap-3 pt-3"
+          style={{ background: "rgba(10,10,10,0.95)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)" }}
         >
           {links.map((l) => (
             <a
               key={l}
               href={`#${l.toLowerCase()}`}
               onClick={() => setOpen(false)}
-              className="text-white/50 hover:text-[#00f5ff] transition-colors font-mono text-sm py-1.5"
+              className="text-white/50 hover:text-[#00f5ff] transition-all font-mono text-sm py-1.5 nav-link"
             >
               {l}
             </a>
@@ -615,8 +585,12 @@ function About() {
 
   return (
     <section id="about" className="py-32 relative overflow-hidden">
-      <AboutBackground />
-      <Starfield />
+      <ThreeScene variant="torus" particleCount={200} />
+      <div className="absolute inset-0 pointer-events-none grid-dots" />
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/5 w-[500px] h-[500px] rounded-full bg-[#a855f7]/4 blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/5 w-[450px] h-[450px] rounded-full bg-[#3b82f6]/5 blur-3xl" />
+      </div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#a855f7]/3 to-transparent pointer-events-none" />
       <div className="max-w-7xl mx-auto px-5">
         <motion.div
@@ -712,8 +686,13 @@ function Skills() {
   const [tab, setTab] = useState<keyof typeof SKILLS>("frontend");
   const tabs = Object.keys(SKILLS) as (keyof typeof SKILLS)[];
   return (
-    <section id="skills" className="py-32 relative">
-      <div className="absolute inset-0 grid-dots opacity-25 pointer-events-none" />
+    <section id="skills" className="py-32 relative overflow-hidden">
+      <ThreeScene variant="icosahedron" particleCount={200} />
+      <div className="absolute inset-0 grid-dots pointer-events-none" />
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 right-1/4 w-[550px] h-[550px] rounded-full bg-[#00f5ff]/4 blur-3xl" />
+        <div className="absolute bottom-1/4 left-1/4 w-[450px] h-[450px] rounded-full bg-[#3b82f6]/5 blur-3xl" />
+      </div>
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#00f5ff]/25 to-transparent" />
       <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#a855f7]/25 to-transparent" />
 
@@ -758,18 +737,18 @@ function Skills() {
                  const color = SKILL_COLORS[i % SKILL_COLORS.length];
                  const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
                  return (
-                   <div key={skill.name} className="flex-shrink-0 mr-6" data-card>
-                     <TiltCard className="glass p-5 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-[140px]">
-                       <div className="relative mb-3">
-                         <SkillRing level={skill.level} color={color} />
-                         <div className="absolute inset-0 flex items-center justify-center">
-                           <span className="font-mono text-[11px] font-bold" style={{ color }}>{skill.level}%</span>
+                     <div key={skill.name} className="flex-shrink-0 mr-8" data-card>
+                       <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-[180px]">
+                         <div className="relative mb-5">
+                           <SkillRing level={skill.level} color={color} />
+                           <div className="absolute inset-0 flex items-center justify-center">
+                             <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
+                           </div>
                          </div>
-                       </div>
-                       <p className="text-white text-xs font-semibold leading-snug mb-2">{skill.name}</p>
-                       <span className="font-mono text-[9px] px-2 py-0.5 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
-                     </TiltCard>
-                   </div>
+                         <p className="text-white text-sm font-semibold leading-snug mb-3">{skill.name}</p>
+                         <span className="font-mono text-[10px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
+                       </TiltCard>
+                     </div>
                  );
                })}
              </div>
@@ -778,18 +757,18 @@ function Skills() {
                  const color = SKILL_COLORS[i % SKILL_COLORS.length];
                  const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
                  return (
-                   <div key={`dup-${skill.name}`} className="flex-shrink-0 mr-6" data-card>
-                     <TiltCard className="glass p-5 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-[140px]">
-                       <div className="relative mb-3">
-                         <SkillRing level={skill.level} color={color} />
-                         <div className="absolute inset-0 flex items-center justify-center">
-                           <span className="font-mono text-[11px] font-bold" style={{ color }}>{skill.level}%</span>
-                         </div>
-                       </div>
-                       <p className="text-white text-xs font-semibold leading-snug mb-2">{skill.name}</p>
-                       <span className="font-mono text-[9px] px-2 py-0.5 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
-                     </TiltCard>
-                   </div>
+                    <div key={`dup-${skill.name}`} className="flex-shrink-0 mr-8" data-card>
+                      <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-[180px]">
+                        <div className="relative mb-5">
+                          <SkillRing level={skill.level} color={color} />
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
+                          </div>
+                        </div>
+                        <p className="text-white text-sm font-semibold leading-snug mb-3">{skill.name}</p>
+                        <span className="font-mono text-[10px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
+                      </TiltCard>
+                    </div>
                  );
                })}
              </div>
@@ -828,7 +807,15 @@ function Projects() {
   const visible = filter === "all" ? PROJECTS : PROJECTS.filter((p) => p.category === filter);
 
   return (
-    <section id="projects" className="py-32 relative">
+    <section id="projects" className="py-32 relative overflow-hidden">
+      <div className="absolute inset-0 translate-y-[-60px]">
+        <ThreeScene variant="octahedron" particleCount={200} />
+      </div>
+      <div className="absolute inset-0 pointer-events-none grid-dots" />
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-[#a855f7]/4 blur-3xl" />
+        <div className="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] rounded-full bg-[#00f5ff]/4 blur-3xl" />
+      </div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#3b82f6]/3 to-transparent pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-5">
@@ -941,7 +928,14 @@ function Projects() {
 function Journey() {
   return (
     <section id="journey" className="py-32 relative overflow-hidden">
-      <div className="absolute inset-0 grid-dots opacity-18 pointer-events-none" />
+      <div className="absolute inset-0 translate-y-[-60px]">
+        <ThreeScene variant="torusKnot" particleCount={200} />
+      </div>
+      <div className="absolute inset-0 grid-dots pointer-events-none" />
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 right-1/5 w-[500px] h-[500px] rounded-full bg-[#00f5ff]/4 blur-3xl" />
+        <div className="absolute bottom-1/4 left-1/5 w-[450px] h-[450px] rounded-full bg-[#a855f7]/5 blur-3xl" />
+      </div>
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#3b82f6]/28 to-transparent" />
 
       <div className="max-w-5xl mx-auto px-5">
@@ -1000,8 +994,11 @@ function Journey() {
                   }`}
                 >
                   <span
-                    className="font-mono text-2xl font-black text-[#00f5ff]/45"
-                    style={{ textShadow: "0 0 20px #00f5ff30" }}
+                    className="font-mono text-2xl font-black"
+                    style={{
+                      color: "#00f5ff",
+                      textShadow: "0 0 8px #00f5ff, 0 0 20px #00f5ff80, 0 0 40px #00f5ff40, 0 0 80px #00f5ff20",
+                    }}
                   >
                     {item.year}
                   </span>
@@ -1017,23 +1014,57 @@ function Journey() {
 
 function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
-    setForm({ name: "", email: "", message: "" });
-    setTimeout(() => setSent(false), 3500);
+    if (!isValidEmail(form.email)) {
+      toast.error("Please enter a valid email address.", {
+        style: { background: "#1a1a2e", border: "1px solid #ef444480", color: "#f87171" },
+      });
+      return;
+    }
+    setSending(true);
+    try {
+      await emailjs.send(
+        "service_donudbj",
+        "template_45w1gxj",
+        {
+          from_name: form.name,
+          from_email: form.email,
+          message: form.message,
+        },
+        "vvbKVjVVkq_zwROe8"
+      );
+      setForm({ name: "", email: "", message: "" });
+      setShowSuccess(true);
+    } catch {
+      toast.error("Failed to send message. Please try again later.", {
+        style: { background: "#1a1a2e", border: "1px solid #ef444480", color: "#f87171" },
+      });
+    } finally {
+      setSending(false);
+    }
   };
 
   const socials = [
-    { icon: Github,   label: "GitHub",   color: "#e2e8f0" },
-    { icon: Linkedin, label: "LinkedIn", color: "#0a91d1" },
-    { icon: Twitter,  label: "Twitter",  color: "#1d9bf0" },
+    { icon: Github,   label: "GitHub",   color: "#e2e8f0", url: "https://github.com/arisfir016" },
+    { icon: Linkedin, label: "LinkedIn", color: "#0a91d1", url: "https://www.linkedin.com/in/arisfir016" },
+    { icon: Twitter,  label: "Twitter",  color: "#1d9bf0", url: "#" },
   ];
 
   return (
-    <section id="contact" className="py-32 relative">
+    <section id="contact" className="py-32 relative overflow-hidden">
+      <ThreeScene variant="dodecahedron" particleCount={200} />
+      <div className="absolute inset-0 pointer-events-none grid-dots" />
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 left-1/4 w-[550px] h-[550px] rounded-full bg-[#00f5ff]/4 blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-[450px] h-[450px] rounded-full bg-[#a855f7]/5 blur-3xl" />
+      </div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#00f5ff]/3 to-transparent pointer-events-none" />
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#00f5ff]/28 to-transparent" />
 
@@ -1046,9 +1077,9 @@ function Contact() {
         >
           <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">05 / Contact</span>
           <h2 className="text-4xl sm:text-5xl font-black text-white mt-2">
-            Let's Build{" "}
+            Let's{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#a855f7]">
-              Something
+              Connect
             </span>
           </h2>
         </motion.div>
@@ -1061,15 +1092,16 @@ function Contact() {
             viewport={{ once: true }}
           >
             <p className="text-white/52 text-lg leading-relaxed mb-10">
-              Always open to discussing new projects, creative ideas, or opportunities to be part of
-              your vision. Whether you have a brief or just want to talk tech — reach out.
+              If you have a project in mind, need help with a development task, or just want to
+              chat about tech, feel free to drop me a message. I'm always happy to discuss new
+              opportunities or exchange ideas.
             </p>
 
             <div className="space-y-4 mb-10">
               {[
-                { icon: Mail,    label: "Email",        value: "aris.firmansyah@example.com",      color: "#00f5ff" },
-                { icon: MapPin,  label: "Location",     value: "San Francisco, CA",           color: "#a855f7" },
-                { icon: Code2,   label: "Available for", value: "Freelance & Full-time roles", color: "#3b82f6" },
+                { icon: Mail,    label: "Email",        value: "arisfir016@gmail.com",      color: "#00f5ff" },
+                { icon: MapPin,  label: "Location",     value: "Sragen, Jawa Tengah, Indonesia",           color: "#a855f7" },
+                { icon: Code2,   label: "Available for", value: "Open for freelance projects and full-time roles", color: "#3b82f6" },
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-4">
                   <div
@@ -1090,8 +1122,9 @@ function Contact() {
               {socials.map((s) => (
                 <TiltCard key={s.label}>
                   <motion.a
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ scale: 1.06 }}
                     className="w-11 h-11 glass rounded-xl flex items-center justify-center border border-white/10 hover:border-white/28 transition-colors"
                     aria-label={s.label}
@@ -1110,6 +1143,7 @@ function Contact() {
             viewport={{ once: true }}
           >
             <form
+              ref={formRef}
               onSubmit={handleSubmit}
               className="glass-md p-8 rounded-2xl"
             >
@@ -1150,8 +1184,8 @@ function Contact() {
                 type="submit"
                 className="w-full py-3 bg-gradient-to-r from-[#00f5ff] to-[#3b82f6] text-[#050505] font-bold text-sm rounded-xl flex items-center justify-center gap-2 hover:shadow-[0_0_36px_#00f5ff40] hover:-translate-y-0.5 transition-all duration-200"
               >
-                {sent ? (
-                  <><Shield size={15} /> Message Sent!</>
+                {sending ? (
+                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
                 ) : (
                   <><Rocket size={15} /> Send Message</>
                 )}
@@ -1160,6 +1194,95 @@ function Contact() {
           </motion.div>
         </div>
       </div>
+
+      {/* Success Popup */}
+      {showSuccess && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+          onClick={() => setShowSuccess(false)}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ type: "spring", damping: 22, stiffness: 260 }}
+            className="relative w-[90%] max-w-sm p-10 rounded-2xl text-center"
+            style={{
+              background: "linear-gradient(135deg, rgba(5,5,5,0.95) 0%, rgba(15,15,30,0.95) 100%)",
+              border: "1px solid rgba(0,245,255,0.15)",
+              boxShadow: "0 0 60px rgba(0,245,255,0.08), 0 0 120px rgba(168,85,247,0.04)",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Green checkmark */}
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", damping: 14, stiffness: 260, delay: 0.15 }}
+              className="mx-auto mb-5 w-16 h-16 rounded-full flex items-center justify-center"
+              style={{ background: "rgba(34,197,94,0.12)", border: "2px solid rgba(34,197,94,0.3)" }}
+            >
+              <motion.svg
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.4, delay: 0.35 }}
+                viewBox="0 0 24 24"
+                className="w-8 h-8"
+                fill="none"
+                stroke="#22c55e"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <motion.path
+                  d="M5 13l4 4L19 7"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 0.4, delay: 0.35 }}
+                />
+              </motion.svg>
+            </motion.div>
+
+            {/* SUCCESS */}
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="font-mono text-sm tracking-[0.3em] mb-2"
+              style={{ color: "#22c55e" }}
+            >
+              SUCCESS
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="text-white/55 text-sm leading-relaxed mb-7"
+            >
+              Your message has been sent! I'll get back to you as soon as possible.
+            </motion.p>
+
+            <motion.button
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => setShowSuccess(false)}
+              className="font-mono text-xs tracking-widest uppercase px-8 py-2.5 rounded-xl transition-all"
+              style={{
+                background: "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))",
+                border: "1px solid rgba(34,197,94,0.3)",
+                color: "#22c55e",
+              }}
+            >
+              Close
+            </motion.button>
+          </motion.div>
+        </motion.div>
+      )}
     </section>
   );
 }
@@ -1328,6 +1451,12 @@ export default function App() {
         <Journey />
         <Contact />
         <Footer />
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            style: { fontFamily: "'JetBrains Mono', monospace", fontSize: "13px" },
+          }}
+        />
       </motion.div>
     </>
   );
