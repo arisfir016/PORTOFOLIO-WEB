@@ -768,37 +768,6 @@ function Skills() {
   const [tab, setTab] = useState<keyof typeof SKILLS>("frontend");
   const tabs = Object.keys(SKILLS) as (keyof typeof SKILLS)[];
 
-  const renderCard = (skill: { name: string; level: number }, i: number, key: string) => {
-    const color = SKILL_COLORS[i % SKILL_COLORS.length];
-    const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
-    const IconComp = SKILL_ICONS[skill.name];
-    return (
-      <motion.div
-        key={key}
-        initial={{ opacity: 0, y: 16, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ delay: i * 0.04, duration: 0.3 }}
-        className="flex-shrink-0"
-      >
-        <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-[155px] sm:w-[190px]">
-          <div className="relative mb-4">
-            <SkillRing level={skill.level} color={color} />
-            <div className="absolute inset-0 flex items-center justify-center">
-              {IconComp ? (
-                <IconComp className="w-6 h-6 sm:w-7 sm:h-7" style={{ color }} />
-              ) : (
-                <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
-              )}
-            </div>
-          </div>
-          <p className="text-white text-sm sm:text-base font-semibold leading-snug mb-1">{skill.name}</p>
-          <p className="font-mono text-xs sm:text-sm font-bold mb-3" style={{ color }}>{skill.level}%</p>
-          <span className="font-mono text-[11px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
-        </TiltCard>
-      </motion.div>
-    );
-  };
-
   return (
     <section id="skills" className="py-14 lg:py-20 relative overflow-hidden">
       <ThreeScene variant="icosahedron" particleCount={200} />
@@ -826,123 +795,298 @@ function Skills() {
           </h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-12 gap-6 lg:gap-10">
-          {/* Main content — 8 cols */}
-          <div className="lg:col-span-8">
-            {/* Tab strip */}
-            <div className="flex flex-wrap gap-3 mb-10">
-              {tabs.map((t) => (
-                <button
-                  key={t}
-                  onClick={() => setTab(t)}
-                  className={`font-mono text-xs px-5 py-2 rounded-full capitalize tracking-wider transition-all duration-200 ${
-                    tab === t
-                      ? "bg-[#00f5ff] text-[#050505] font-bold shadow-[0_0_22px_#00f5ff45]"
-                      : "glass border border-white/10 text-white/45 hover:text-white/75 hover:border-white/20"
-                  }`}
-                >
-                  {t}
-                </button>
-              ))}
-            </div>
-
-            {/* Skill cards */}
-             <motion.div
-               key={tab}
-               initial={{ opacity: 0, y: 20 }}
-               animate={{ opacity: 1, y: 0 }}
-               transition={{ duration: 0.35, ease: "easeOut" }}
-             >
-               {/* Mobile: horizontal swipeable row */}
-               <div className="lg:hidden overflow-x-auto scrollbar-none snap-x snap-mandatory -mx-5 px-5 py-6">
-                 <div className="flex gap-4 snap-x">
-                   {SKILLS[tab].map((skill, i) => renderCard(skill, i, skill.name))}
-                 </div>
-               </div>
-
-               {/* Desktop: infinite marquee */}
-               <div className="hidden lg:block overflow-hidden mask-edges py-8">
-                 <div className="flex w-max marquee-scroll marquee-pause">
-                   <div className="flex flex-shrink-0">
-                     {SKILLS[tab].map((skill, i) => renderCard(skill, i, skill.name))}
-                   </div>
-                   <div className="flex flex-shrink-0">
-                     {SKILLS[tab].map((skill, i) => renderCard(skill, i, `dup-${skill.name}`))}
-                   </div>
-                 </div>
-               </div>
-             </motion.div>
-
-            {/* Language pill cloud */}
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mt-10 flex flex-wrap gap-2.5 justify-center"
-            >
-              {["JavaScript", "TypeScript", "Python", "Go", "Java", "C#", "PHP", "Rust", "SQL", "GraphQL", "Bash", "YAML"].map(
-                (lang, i) => (
-                  <motion.span
-                    key={lang}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.04 }}
-                    className="font-mono text-xs px-3.5 py-1.5 rounded-full border border-white/10 text-white/40 hover:text-white/70 hover:border-[#00f5ff]/35 transition-all cursor-default"
+        {/* ===== DESKTOP LAYOUT (untouched original) ===== */}
+        <div className="hidden lg:block">
+          <div className="grid lg:grid-cols-12 gap-6 lg:gap-10">
+            {/* Main content — 8 cols */}
+            <div className="lg:col-span-8">
+              {/* Tab strip */}
+              <div className="flex flex-wrap gap-3 mb-10">
+                {tabs.map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => setTab(t)}
+                    className={`font-mono text-xs px-5 py-2 rounded-full capitalize tracking-wider transition-all duration-200 ${
+                      tab === t
+                        ? "bg-[#00f5ff] text-[#050505] font-bold shadow-[0_0_22px_#00f5ff45]"
+                        : "glass border border-white/10 text-white/45 hover:text-white/75 hover:border-white/20"
+                    }`}
                   >
-                    {lang}
-                  </motion.span>
-                )
-              )}
-            </motion.div>
-          </div>
-
-          {/* Sidebar — 4 cols */}
-          <motion.div
-            key={tab}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.35, ease: "easeOut", delay: 0.1 }}
-            className="lg:col-span-4 flex flex-col gap-5"
-          >
-            {/* Stack Overview */}
-            <div className="border border-slate-800 bg-slate-900/50 backdrop-blur rounded-xl p-5">
-              <p className="font-mono text-[11px] text-white/30 uppercase tracking-widest mb-4">Stack Overview</p>
-              <div className="space-y-3">
-                {tabs.map((t) => {
-                  const count = SKILLS[t].length;
-                  return (
-                    <div key={t} className="flex items-center justify-between pb-2 border-b border-slate-800 last:border-b-0 last:pb-0">
-                      <span className="text-sm text-white/60 capitalize">{t}</span>
-                      <span className="font-mono text-xs text-white/30">{count} tools</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Proficiency Distribution */}
-            <div className="border border-slate-800 bg-slate-900/50 backdrop-blur rounded-xl p-5">
-              <p className="font-mono text-[11px] text-white/30 uppercase tracking-widest mb-4">Proficiency</p>
-              <div className="space-y-4">
-                {[
-                  { label: "Expert", range: "90 100%", color: "#00f5ff", pct: 25 },
-                  { label: "Advanced", range: "80 89%", color: "#a855f7", pct: 33 },
-                  { label: "Proficient", range: "70 79%", color: "#3b82f6", pct: 42 },
-                ].map((tier) => (
-                  <div key={tier.label}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm text-white/60">{tier.label}</span>
-                      <span className="font-mono text-[11px] text-white/30">{tier.range}</span>
-                    </div>
-                    <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
-                      <div className="h-full rounded-full" style={{ width: `${tier.pct}%`, background: tier.color }} />
-                    </div>
-                  </div>
+                    {t}
+                  </button>
                 ))}
               </div>
+
+              {/* Skill cards - infinite marquee */}
+              <motion.div
+                key={tab}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+              >
+                <div className="overflow-hidden mask-edges py-8">
+                  <div className="flex w-max marquee-scroll marquee-pause">
+                    <div className="flex flex-shrink-0">
+                      {SKILLS[tab].map((skill, i) => {
+                        const color = SKILL_COLORS[i % SKILL_COLORS.length];
+                        const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
+                        const IconComp = SKILL_ICONS[skill.name];
+                        return (
+                          <motion.div
+                            key={skill.name}
+                            initial={{ opacity: 0, y: 16, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            transition={{ delay: i * 0.04, duration: 0.3 }}
+                            className="flex-shrink-0 mr-8"
+                          >
+                            <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-[190px]">
+                              <div className="relative mb-4">
+                                <SkillRing level={skill.level} color={color} />
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  {IconComp ? (
+                                    <IconComp className="w-7 h-7" style={{ color }} />
+                                  ) : (
+                                    <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
+                                  )}
+                                </div>
+                              </div>
+                              <p className="text-white text-base font-semibold leading-snug mb-1">{skill.name}</p>
+                              <p className="font-mono text-sm font-bold mb-3" style={{ color }}>{skill.level}%</p>
+                              <span className="font-mono text-[11px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
+                            </TiltCard>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                    <div className="flex flex-shrink-0">
+                      {SKILLS[tab].map((skill, i) => {
+                        const color = SKILL_COLORS[i % SKILL_COLORS.length];
+                        const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
+                        const IconComp = SKILL_ICONS[skill.name];
+                        return (
+                          <motion.div
+                            key={`dup-${skill.name}`}
+                            initial={{ opacity: 0, y: 16, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            transition={{ delay: i * 0.04 + 0.15, duration: 0.3 }}
+                            className="flex-shrink-0 mr-8"
+                          >
+                            <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-[190px]">
+                              <div className="relative mb-4">
+                                <SkillRing level={skill.level} color={color} />
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  {IconComp ? (
+                                    <IconComp className="w-7 h-7" style={{ color }} />
+                                  ) : (
+                                    <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
+                                  )}
+                                </div>
+                              </div>
+                              <p className="text-white text-base font-semibold leading-snug mb-1">{skill.name}</p>
+                              <p className="font-mono text-sm font-bold mb-3" style={{ color }}>{skill.level}%</p>
+                              <span className="font-mono text-[11px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
+                            </TiltCard>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Language pill cloud */}
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="mt-10 flex flex-wrap gap-2.5 justify-center"
+              >
+                {["JavaScript", "TypeScript", "Python", "Go", "Java", "C#", "PHP", "Rust", "SQL", "GraphQL", "Bash", "YAML"].map(
+                  (lang, i) => (
+                    <motion.span
+                      key={lang}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.04 }}
+                      className="font-mono text-xs px-3.5 py-1.5 rounded-full border border-white/10 text-white/40 hover:text-white/70 hover:border-[#00f5ff]/35 transition-all cursor-default"
+                    >
+                      {lang}
+                    </motion.span>
+                  )
+                )}
+              </motion.div>
+            </div>
+
+            {/* Sidebar — 4 cols */}
+            <motion.div
+              key={tab}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.35, ease: "easeOut", delay: 0.1 }}
+              className="lg:col-span-4 flex flex-col gap-5"
+            >
+              {/* Stack Overview */}
+              <div className="border border-slate-800 bg-slate-900/50 backdrop-blur rounded-xl p-5">
+                <p className="font-mono text-[11px] text-white/30 uppercase tracking-widest mb-4">Stack Overview</p>
+                <div className="space-y-3">
+                  {tabs.map((t) => {
+                    const count = SKILLS[t].length;
+                    return (
+                      <div key={t} className="flex items-center justify-between pb-2 border-b border-slate-800 last:border-b-0 last:pb-0">
+                        <span className="text-sm text-white/60 capitalize">{t}</span>
+                        <span className="font-mono text-xs text-white/30">{count} tools</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Proficiency Distribution */}
+              <div className="border border-slate-800 bg-slate-900/50 backdrop-blur rounded-xl p-5">
+                <p className="font-mono text-[11px] text-white/30 uppercase tracking-widest mb-4">Proficiency</p>
+                <div className="space-y-4">
+                  {[
+                    { label: "Expert", range: "90 100%", color: "#00f5ff", pct: 25 },
+                    { label: "Advanced", range: "80 89%", color: "#a855f7", pct: 33 },
+                    { label: "Proficient", range: "70 79%", color: "#3b82f6", pct: 42 },
+                  ].map((tier) => (
+                    <div key={tier.label}>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-sm text-white/60">{tier.label}</span>
+                        <span className="font-mono text-[11px] text-white/30">{tier.range}</span>
+                      </div>
+                      <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                        <div className="h-full rounded-full" style={{ width: `${tier.pct}%`, background: tier.color }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* ===== MOBILE LAYOUT (optimized) ===== */}
+        <div className="block lg:hidden w-full space-y-8">
+          {/* Tab strip */}
+          <div className="flex flex-wrap gap-3">
+            {tabs.map((t) => (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                className={`font-mono text-xs px-5 py-2 rounded-full capitalize tracking-wider transition-all duration-200 ${
+                  tab === t
+                    ? "bg-[#00f5ff] text-[#050505] font-bold shadow-[0_0_22px_#00f5ff45]"
+                    : "glass border border-white/10 text-white/45 hover:text-white/75 hover:border-white/20"
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+
+          {/* Skill cards - horizontal swipeable carousel */}
+          <motion.div
+            key={tab}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+          >
+            <div className="flex flex-row overflow-x-auto snap-x snap-mandatory gap-4 pb-4 scrollbar-none -mx-4 px-4">
+              {SKILLS[tab].map((skill, i) => {
+                const color = SKILL_COLORS[i % SKILL_COLORS.length];
+                const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
+                const IconComp = SKILL_ICONS[skill.name];
+                return (
+                  <motion.div
+                    key={skill.name}
+                    initial={{ opacity: 0, y: 16, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ delay: i * 0.04, duration: 0.3 }}
+                    className="w-[155px] flex-shrink-0 snap-center"
+                  >
+                    <TiltCard className="glass py-8 px-4 rounded-2xl cursor-default flex flex-col items-center text-center w-full">
+                      <div className="relative mb-3">
+                        <SkillRing level={skill.level} color={color} />
+                        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                          {IconComp ? (
+                            <IconComp className="w-6 h-6" style={{ color }} />
+                          ) : (
+                            <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
+                          )}
+                        </div>
+                      </div>
+                      <p className="text-white text-sm font-semibold leading-snug mb-1">{skill.name}</p>
+                      <p className="font-mono text-xs font-bold mb-2" style={{ color }}>{skill.level}%</p>
+                      <span className="font-mono text-[11px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
+                    </TiltCard>
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
+
+          {/* Language pills */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex flex-wrap gap-2 justify-start"
+          >
+            {["JavaScript", "TypeScript", "Python", "Go", "Java", "C#", "PHP", "Rust", "SQL", "GraphQL", "Bash", "YAML"].map(
+              (lang, i) => (
+                <motion.span
+                  key={lang}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.04 }}
+                  className="font-mono text-xs px-3.5 py-1.5 rounded-full border border-white/10 text-white/40 hover:text-white/70 hover:border-[#00f5ff]/35 transition-all cursor-default"
+                >
+                  {lang}
+                </motion.span>
+              )
+            )}
+          </motion.div>
+
+          {/* Stack Overview */}
+          <div className="border border-slate-800 bg-slate-900/50 backdrop-blur rounded-xl p-5">
+            <p className="font-mono text-[11px] text-white/30 uppercase tracking-widest mb-4">Stack Overview</p>
+            <div className="space-y-3">
+              {tabs.map((t) => {
+                const count = SKILLS[t].length;
+                return (
+                  <div key={t} className="flex items-center justify-between pb-2 border-b border-slate-800 last:border-b-0 last:pb-0">
+                    <span className="text-sm text-white/60 capitalize">{t}</span>
+                    <span className="font-mono text-xs text-white/30">{count} tools</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Proficiency Distribution */}
+          <div className="border border-slate-800 bg-slate-900/50 backdrop-blur rounded-xl p-5">
+            <p className="font-mono text-[11px] text-white/30 uppercase tracking-widest mb-4">Proficiency</p>
+            <div className="space-y-4">
+              {[
+                { label: "Expert", range: "90 100%", color: "#00f5ff", pct: 25 },
+                { label: "Advanced", range: "80 89%", color: "#a855f7", pct: 33 },
+                { label: "Proficient", range: "70 79%", color: "#3b82f6", pct: 42 },
+              ].map((tier) => (
+                <div key={tier.label}>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-sm text-white/60">{tier.label}</span>
+                    <span className="font-mono text-[11px] text-white/30">{tier.range}</span>
+                  </div>
+                  <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-full rounded-full" style={{ width: `${tier.pct}%`, background: tier.color }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
