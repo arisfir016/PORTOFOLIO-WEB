@@ -815,7 +815,7 @@ function Skills() {
           <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">02 / Skills</span>
           <h2 className="text-4xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
             Tech{" "}
-            <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#3b82f6] pr-[0.15em]">
+            <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#3b82f6] pr-6">
               Stack
             </span>
           </h2>
