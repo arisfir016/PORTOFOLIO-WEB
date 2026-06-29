@@ -179,6 +179,8 @@ const GLOBAL_CSS = `
   ::-webkit-scrollbar { width: 3px; height: 3px; }
   ::-webkit-scrollbar-track { background: #050505; }
   ::-webkit-scrollbar-thumb { background: rgba(0,245,255,0.25); border-radius: 2px; }
+  .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+  .scrollbar-none::-webkit-scrollbar { display: none; }
 
   @keyframes marquee-scroll {
     0%   { transform: translateX(0); }
@@ -765,6 +767,38 @@ function About() {
 function Skills() {
   const [tab, setTab] = useState<keyof typeof SKILLS>("frontend");
   const tabs = Object.keys(SKILLS) as (keyof typeof SKILLS)[];
+
+  const renderCard = (skill: { name: string; level: number }, i: number, key: string) => {
+    const color = SKILL_COLORS[i % SKILL_COLORS.length];
+    const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
+    const IconComp = SKILL_ICONS[skill.name];
+    return (
+      <motion.div
+        key={key}
+        initial={{ opacity: 0, y: 16, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ delay: i * 0.04, duration: 0.3 }}
+        className="flex-shrink-0"
+      >
+        <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-[155px] sm:w-[190px]">
+          <div className="relative mb-4">
+            <SkillRing level={skill.level} color={color} />
+            <div className="absolute inset-0 flex items-center justify-center">
+              {IconComp ? (
+                <IconComp className="w-6 h-6 sm:w-7 sm:h-7" style={{ color }} />
+              ) : (
+                <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
+              )}
+            </div>
+          </div>
+          <p className="text-white text-sm sm:text-base font-semibold leading-snug mb-1">{skill.name}</p>
+          <p className="font-mono text-xs sm:text-sm font-bold mb-3" style={{ color }}>{skill.level}%</p>
+          <span className="font-mono text-[11px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
+        </TiltCard>
+      </motion.div>
+    );
+  };
+
   return (
     <section id="skills" className="py-14 lg:py-20 relative overflow-hidden">
       <ThreeScene variant="icosahedron" particleCount={200} />
@@ -812,78 +846,28 @@ function Skills() {
               ))}
             </div>
 
-            {/* Skill cards - infinite marquee */}
+            {/* Skill cards */}
              <motion.div
                key={tab}
                initial={{ opacity: 0, y: 20 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ duration: 0.35, ease: "easeOut" }}
              >
-               <div className="overflow-hidden mask-edges py-8">
+               {/* Mobile: horizontal swipeable row */}
+               <div className="lg:hidden overflow-x-auto scrollbar-none snap-x snap-mandatory -mx-5 px-5 py-6">
+                 <div className="flex gap-4 snap-x">
+                   {SKILLS[tab].map((skill, i) => renderCard(skill, i, skill.name))}
+                 </div>
+               </div>
+
+               {/* Desktop: infinite marquee */}
+               <div className="hidden lg:block overflow-hidden mask-edges py-8">
                  <div className="flex w-max marquee-scroll marquee-pause">
                    <div className="flex flex-shrink-0">
-                     {SKILLS[tab].map((skill, i) => {
-                       const color = SKILL_COLORS[i % SKILL_COLORS.length];
-                       const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
-                       const IconComp = SKILL_ICONS[skill.name];
-                       return (
-                           <motion.div
-                             key={skill.name}
-                             initial={{ opacity: 0, y: 16, scale: 0.95 }}
-                             animate={{ opacity: 1, y: 0, scale: 1 }}
-                             transition={{ delay: i * 0.04, duration: 0.3 }}
-                             className="flex-shrink-0 mr-8" data-card
-                           >
-                             <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-[190px]">
-                               <div className="relative mb-4">
-                                 <SkillRing level={skill.level} color={color} />
-                                 <div className="absolute inset-0 flex items-center justify-center">
-                                   {IconComp ? (
-                                     <IconComp className="w-7 h-7" style={{ color }} />
-                                   ) : (
-                                     <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
-                                   )}
-                                 </div>
-                               </div>
-                               <p className="text-white text-base font-semibold leading-snug mb-1">{skill.name}</p>
-                               <p className="font-mono text-sm font-bold mb-3" style={{ color }}>{skill.level}%</p>
-                               <span className="font-mono text-[11px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
-                             </TiltCard>
-                           </motion.div>
-                       );
-                     })}
+                     {SKILLS[tab].map((skill, i) => renderCard(skill, i, skill.name))}
                    </div>
                    <div className="flex flex-shrink-0">
-                     {SKILLS[tab].map((skill, i) => {
-                       const color = SKILL_COLORS[i % SKILL_COLORS.length];
-                       const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
-                       const IconComp = SKILL_ICONS[skill.name];
-                       return (
-                           <motion.div
-                             key={`dup-${skill.name}`}
-                             initial={{ opacity: 0, y: 16, scale: 0.95 }}
-                             animate={{ opacity: 1, y: 0, scale: 1 }}
-                             transition={{ delay: i * 0.04 + 0.15, duration: 0.3 }}
-                             className="flex-shrink-0 mr-8" data-card
-                           >
-                             <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-[190px]">
-                               <div className="relative mb-4">
-                                 <SkillRing level={skill.level} color={color} />
-                                 <div className="absolute inset-0 flex items-center justify-center">
-                                   {IconComp ? (
-                                     <IconComp className="w-7 h-7" style={{ color }} />
-                                   ) : (
-                                     <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
-                                   )}
-                                 </div>
-                               </div>
-                               <p className="text-white text-base font-semibold leading-snug mb-1">{skill.name}</p>
-                               <p className="font-mono text-sm font-bold mb-3" style={{ color }}>{skill.level}%</p>
-                               <span className="font-mono text-[11px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
-                             </TiltCard>
-                           </motion.div>
-                       );
-                     })}
+                     {SKILLS[tab].map((skill, i) => renderCard(skill, i, `dup-${skill.name}`))}
                    </div>
                  </div>
                </div>
