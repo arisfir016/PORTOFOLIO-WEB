@@ -220,7 +220,7 @@ const PROJECTS = [
   },
   {
     id: 2, name: "Kalkulator HPP UMKM", category: "fullstack" as const,
-    description: "Aplikasi web untuk menghitung Harga Pokok Penjualan (HPP) produk UMKM. Memudahkan pelaku usaha kecil menengah dalam menentukan harga jual yang tepat berdasarkan biaya bahan, tenaga kerja, dan overhead.",
+    description: "A comprehensive fullstack web application for computing Cost of Goods Sold (COGS) within micro, small, and medium enterprises (MSMEs). Designed to facilitate entrepreneurs in establishing optimal selling prices through systematic cost component analysis, encompassing raw materials, labor expenditure, and operational overhead allocation.",
     tech: ["React", "Node.js", "PostgreSQL", "Tailwind CSS"],
     grad: "from-emerald-500/20 to-teal-700/20", accent: "#10b981",
   },
