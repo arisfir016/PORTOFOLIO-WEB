@@ -574,7 +574,7 @@ function Hero() {
         </div>
 
         {/* Main content */}
-        <div className="relative z-10 space-y-6 mt-auto mb-6">
+        <div className="relative z-10 space-y-6 mt-auto mb-20">
           <div>
             <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">Hello, I'm</span>
             <h1 className="text-[13vw] sm:text-7xl font-extrabold tracking-tighter leading-[0.85] mt-2 text-white">
