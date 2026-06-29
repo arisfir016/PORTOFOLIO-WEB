@@ -565,7 +565,7 @@ function Hero() {
       {/* ===== MOBILE (redesigned) ===== */}
       <div className="block lg:hidden w-full min-h-screen relative overflow-hidden bg-black text-white px-6 pt-24 pb-12 flex flex-col justify-between">
         {/* Full bleed cinematic background */}
-        <div className="absolute top-0 left-0 right-0 z-0 h-[85%] overflow-hidden -top-20">
+        <div className="absolute top-0 left-0 right-0 z-0 h-[85%] overflow-hidden -top-48">
           <img
             src="/foto-profil.png"
             alt=""
