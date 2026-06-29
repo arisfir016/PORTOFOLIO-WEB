@@ -492,7 +492,7 @@ function Hero() {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-7xl sm:text-8xl lg:text-9xl font-display font-extrabold tracking-tight leading-[1.1] mb-4 pt-2"
+            className="text-7xl sm:text-8xl lg:text-9xl font-display font-extrabold tracking-tight leading-[1.15] mb-6 pt-4"
           >
             <span
               className="glitch-wrap text-white"
