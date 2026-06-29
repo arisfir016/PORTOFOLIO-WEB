@@ -1026,7 +1026,7 @@ function Skills() {
               onMouseDown={() => { isPausedRef.current = true; }}
               onMouseUp={() => { isPausedRef.current = false; }}
               onMouseLeave={() => { isPausedRef.current = false; }}
-              className="flex flex-row overflow-x-auto snap-x snap-mandatory gap-4 pb-4 scrollbar-none -mx-4 px-4"
+              className="flex flex-row overflow-x-auto snap-x snap-mandatory gap-4 py-4 scrollbar-none -mx-4 px-4"
             >
               {[...SKILLS[tab], ...SKILLS[tab]].map((skill, i) => {
                 const color = SKILL_COLORS[i % SKILL_COLORS.length];
@@ -1040,7 +1040,7 @@ function Skills() {
                     transition={{ delay: (i % SKILLS[tab].length) * 0.04, duration: 0.3 }}
                     className="w-[155px] flex-shrink-0 snap-center"
                   >
-                    <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-full">
+                    <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center w-full" style={{ borderColor: `${color}30` } as React.CSSProperties}>
                       <div className="relative mb-4">
                         <SkillRing level={skill.level} color={color} />
                         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
