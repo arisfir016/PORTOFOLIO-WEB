@@ -1038,21 +1038,21 @@ function Skills() {
                     initial={{ opacity: 0, y: 16, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ delay: (i % SKILLS[tab].length) * 0.04, duration: 0.3 }}
-                    className="w-[155px] flex-shrink-0 snap-center"
+                    className="w-[190px] flex-shrink-0 snap-center"
                   >
-                    <TiltCard className="glass py-8 px-4 rounded-2xl cursor-default flex flex-col items-center text-center w-full">
-                      <div className="relative mb-3">
+                    <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center hover:border-white/15 transition-colors w-full">
+                      <div className="relative mb-4">
                         <SkillRing level={skill.level} color={color} />
-                        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                           {IconComp ? (
-                            <IconComp className="w-6 h-6" style={{ color }} />
+                            <IconComp className="w-7 h-7" style={{ color }} />
                           ) : (
                             <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
                           )}
                         </div>
                       </div>
-                      <p className="text-white text-sm font-semibold leading-snug mb-1">{skill.name}</p>
-                      <p className="font-mono text-xs font-bold mb-2" style={{ color }}>{skill.level}%</p>
+                      <p className="text-white text-base font-semibold leading-snug mb-1">{skill.name}</p>
+                      <p className="font-mono text-sm font-bold mb-3" style={{ color }}>{skill.level}%</p>
                       <span className="font-mono text-[11px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
                     </TiltCard>
                   </motion.div>
