@@ -572,7 +572,6 @@ function Hero() {
             className="absolute inset-0 w-full h-full object-cover object-center opacity-40 mix-blend-screen pointer-events-none"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/80 to-black pointer-events-none z-[5]" />
 
         {/* Main content */}
         <div className="relative z-10 space-y-6 mt-auto mb-6">
