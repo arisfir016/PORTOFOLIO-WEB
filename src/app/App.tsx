@@ -645,7 +645,7 @@ function About() {
            <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase shimmer-text">01 / About</span>
            <h2 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
             About{" "}
-            <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a855f7] to-[#3b82f6]">
+            <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a855f7] to-[#3b82f6] pr-[0.15em]">
               Myself
             </span>
           </h2>
@@ -783,7 +783,7 @@ function Skills() {
           <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">02 / Skills</span>
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
             Tech{" "}
-            <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#3b82f6]">
+            <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#3b82f6] pr-[0.15em]">
               Stack
             </span>
           </h2>
@@ -968,7 +968,7 @@ function Projects() {
           <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">03 / Projects</span>
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
             Projects{" "}
-            <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a855f7] to-[#00f5ff]">
+            <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a855f7] to-[#00f5ff] pr-[0.15em]">
               I've Built
             </span>
           </h2>
@@ -1088,7 +1088,7 @@ function Journey() {
           <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">04 / Journey</span>
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
             My{" "}
-            <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#a855f7]">
+            <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#a855f7] pr-[0.15em]">
               Timeline
             </span>
           </h2>
@@ -1218,7 +1218,7 @@ function Contact() {
           <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">05 / Contact</span>
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
             Let's{" "}
-            <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#a855f7]">
+            <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#a855f7] pr-[0.15em]">
               Connect
             </span>
           </h2>
