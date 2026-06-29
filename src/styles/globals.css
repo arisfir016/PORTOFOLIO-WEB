@@ -1,0 +1,18 @@
+@keyframes neon-pulse {
+  0%, 100% {
+    text-shadow:
+      0 0 7px #00f5ff,
+      0 0 10px #00f5ff,
+      0 0 21px #00f5ff,
+      0 0 42px #00f5ff60,
+      0 0 82px #00f5ff40;
+  }
+  50% {
+    text-shadow:
+      0 0 4px #00f5ff,
+      0 0 7px #00f5ff,
+      0 0 13px #00f5ff,
+      0 0 26px #00f5ff60,
+      0 0 50px #00f5ff40;
+  }
+}
