@@ -767,32 +767,6 @@ function About() {
 function Skills() {
   const [tab, setTab] = useState<keyof typeof SKILLS>("frontend");
   const tabs = Object.keys(SKILLS) as (keyof typeof SKILLS)[];
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const isPausedRef = useRef(false);
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-
-    let rafId: number;
-
-    const tick = () => {
-      if (!isPausedRef.current) {
-        el.style.scrollSnapType = "none";
-        el.scrollLeft += 0.6;
-        if (el.scrollLeft >= (el.scrollWidth - el.clientWidth) / 2) {
-          el.scrollLeft = 0;
-        }
-      } else {
-        el.style.scrollSnapType = "x mandatory";
-      }
-      rafId = requestAnimationFrame(tick);
-    };
-
-    rafId = requestAnimationFrame(tick);
-
-    return () => cancelAnimationFrame(rafId);
-  }, [tab]);
 
   return (
     <section id="skills" className="py-14 lg:py-20 relative overflow-hidden">
@@ -1019,45 +993,73 @@ function Skills() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
           >
-            <div
-              ref={scrollRef}
-              onTouchStart={() => { isPausedRef.current = true; }}
-              onTouchEnd={() => { isPausedRef.current = false; }}
-              onMouseDown={() => { isPausedRef.current = true; }}
-              onMouseUp={() => { isPausedRef.current = false; }}
-              onMouseLeave={() => { isPausedRef.current = false; }}
-              className="flex flex-row overflow-x-auto snap-x snap-mandatory gap-4 py-4 scrollbar-none -mx-4 px-4"
-            >
-              {[...SKILLS[tab], ...SKILLS[tab]].map((skill, i) => {
-                const color = SKILL_COLORS[i % SKILL_COLORS.length];
-                const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
-                const IconComp = SKILL_ICONS[skill.name];
-                return (
-                  <motion.div
-                    key={`${i}-${skill.name}`}
-                    initial={{ opacity: 0, y: 16, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ delay: (i % SKILLS[tab].length) * 0.04, duration: 0.3 }}
-                    className="w-[155px] flex-shrink-0 snap-center"
-                  >
-                    <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center w-full" style={{ borderColor: `${color}30` } as React.CSSProperties}>
-                      <div className="relative mb-4">
-                        <SkillRing level={skill.level} color={color} />
-                        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                          {IconComp ? (
-                            <IconComp className="w-7 h-7" style={{ color }} />
-                          ) : (
-                            <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
-                          )}
-                        </div>
-                      </div>
-                      <p className="text-white text-base font-semibold leading-snug mb-1">{skill.name}</p>
-                      <p className="font-mono text-sm font-bold mb-3" style={{ color }}>{skill.level}%</p>
-                      <span className="font-mono text-[11px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
-                    </TiltCard>
-                  </motion.div>
-                );
-              })}
+            <div className="overflow-hidden mask-edges -mx-4 px-4 py-4">
+              <div className="flex w-max marquee-scroll marquee-pause">
+                <div className="flex flex-shrink-0">
+                  {SKILLS[tab].map((skill, i) => {
+                    const color = SKILL_COLORS[i % SKILL_COLORS.length];
+                    const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
+                    const IconComp = SKILL_ICONS[skill.name];
+                    return (
+                      <motion.div
+                        key={skill.name}
+                        initial={{ opacity: 0, y: 16, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{ delay: i * 0.04, duration: 0.3 }}
+                        className="flex-shrink-0 mr-4"
+                      >
+                        <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center w-[155px]" style={{ borderColor: `${color}30` } as React.CSSProperties}>
+                          <div className="relative mb-4">
+                            <SkillRing level={skill.level} color={color} />
+                            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                              {IconComp ? (
+                                <IconComp className="w-7 h-7" style={{ color }} />
+                              ) : (
+                                <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
+                              )}
+                            </div>
+                          </div>
+                          <p className="text-white text-base font-semibold leading-snug mb-1">{skill.name}</p>
+                          <p className="font-mono text-sm font-bold mb-3" style={{ color }}>{skill.level}%</p>
+                          <span className="font-mono text-[11px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
+                        </TiltCard>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+                <div className="flex flex-shrink-0">
+                  {SKILLS[tab].map((skill, i) => {
+                    const color = SKILL_COLORS[i % SKILL_COLORS.length];
+                    const tier = skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Proficient";
+                    const IconComp = SKILL_ICONS[skill.name];
+                    return (
+                      <motion.div
+                        key={`dup-${skill.name}`}
+                        initial={{ opacity: 0, y: 16, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{ delay: i * 0.04 + 0.15, duration: 0.3 }}
+                        className="flex-shrink-0 mr-4"
+                      >
+                        <TiltCard className="glass py-10 px-6 rounded-2xl cursor-default flex flex-col items-center text-center w-[155px]" style={{ borderColor: `${color}30` } as React.CSSProperties}>
+                          <div className="relative mb-4">
+                            <SkillRing level={skill.level} color={color} />
+                            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                              {IconComp ? (
+                                <IconComp className="w-7 h-7" style={{ color }} />
+                              ) : (
+                                <span className="font-mono text-sm font-bold" style={{ color }}>{skill.level}%</span>
+                              )}
+                            </div>
+                          </div>
+                          <p className="text-white text-base font-semibold leading-snug mb-1">{skill.name}</p>
+                          <p className="font-mono text-sm font-bold mb-3" style={{ color }}>{skill.level}%</p>
+                          <span className="font-mono text-[11px] px-3 py-1 rounded-full" style={{ color, background: `${color}15`, border: `1px solid ${color}30` }}>{tier}</span>
+                        </TiltCard>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </motion.div>
 
