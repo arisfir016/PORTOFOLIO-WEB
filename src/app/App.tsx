@@ -577,7 +577,7 @@ function Hero() {
         <div className="relative z-10 space-y-6 mt-auto mb-6">
           <div>
             <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">Hello, I'm</span>
-            <h1 className="text-4xl font-extrabold tracking-tighter leading-none mt-2 text-white">
+            <h1 className="text-[13vw] sm:text-7xl font-extrabold tracking-tighter leading-[0.85] mt-2 text-white">
               ARIS
               <br />
               <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] via-[#3b82f6] to-[#a855f7]">
