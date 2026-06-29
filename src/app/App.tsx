@@ -492,7 +492,7 @@ function Hero() {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-7xl sm:text-8xl lg:text-9xl font-display font-extrabold tracking-tight leading-[1.15] mb-6 pt-4"
+            className="text-5xl sm:text-8xl lg:text-9xl font-display font-extrabold tracking-tight leading-[1.15] mb-6 pt-4"
           >
             <span
               className="glitch-wrap text-white"
@@ -523,7 +523,7 @@ function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
-            className="text-white/45 text-xl max-w-lg leading-relaxed mb-10"
+            className="text-white/45 text-base sm:text-lg max-w-lg leading-relaxed mb-10"
           >
             I write clean, maintainable code and build web applications that
             work well, from responsive frontends to reliable backend services.
@@ -627,7 +627,7 @@ function About() {
   ];
 
   return (
-    <section id="about" className="py-20 relative overflow-hidden">
+    <section id="about" className="py-14 lg:py-20 relative overflow-hidden">
       <ThreeScene variant="torus" particleCount={200} />
       <div className="absolute inset-0 pointer-events-none grid-dots" />
       <div className="absolute inset-0 pointer-events-none">
@@ -640,10 +640,10 @@ function About() {
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-20"
+          className="mb-14 lg:mb-20"
         >
            <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase shimmer-text">01 / About</span>
-          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
+          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
             About{" "}
             <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a855f7] to-[#3b82f6] pr-[0.15em]">
               Myself
@@ -656,7 +656,7 @@ function About() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ staggerChildren: 0.06, delayChildren: 0.08 }}
-          className="grid lg:grid-cols-12 gap-10 items-start"
+          className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-start"
         >
           {/* Bio + strengths — 7 cols */}
           <motion.div
@@ -678,7 +678,7 @@ function About() {
               impressive on paper.
             </p>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {strengths.map((s, i) => (
                 <motion.div
                   key={s.label}
@@ -719,7 +719,7 @@ function About() {
             className="lg:col-span-5 flex flex-col gap-5"
           >
             {/* Current Focus */}
-            <div className="relative border border-slate-800 bg-slate-900/50 backdrop-blur rounded-xl p-6 overflow-hidden">
+            <div className="relative border border-slate-800 bg-slate-900/50 backdrop-blur rounded-xl p-5 overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-[#a855f7]/5 blur-2xl pointer-events-none" />
               <p className="font-mono text-[11px] text-white/30 uppercase tracking-widest mb-4">Current Focus</p>
               <ul className="space-y-3">
@@ -737,13 +737,13 @@ function About() {
             </div>
 
             {/* Quick Stats */}
-            <div className="relative border border-slate-800 bg-slate-900/50 backdrop-blur rounded-xl p-6 overflow-hidden">
+            <div className="relative border border-slate-800 bg-slate-900/50 backdrop-blur rounded-xl p-5 overflow-hidden">
               <div className="absolute top-0 left-0 w-32 h-32 rounded-full bg-[#3b82f6]/5 blur-2xl pointer-events-none" />
               <p className="font-mono text-[11px] text-white/30 uppercase tracking-widest mb-4">Quick Stats</p>
               <div className="grid grid-cols-2 gap-5">
                 {stats.map((s) => (
                   <div key={s.label}>
-                    <p className="text-3xl font-bold text-white" style={{ color: s.color }}>
+                    <p className="text-2xl sm:text-3xl font-bold text-white" style={{ color: s.color }}>
                       <AnimatedNumber to={s.value} suffix={s.suffix} />
                     </p>
                     <p className="text-xs text-white/40 mt-0.5">{s.label}</p>
@@ -766,7 +766,7 @@ function Skills() {
   const [tab, setTab] = useState<keyof typeof SKILLS>("frontend");
   const tabs = Object.keys(SKILLS) as (keyof typeof SKILLS)[];
   return (
-    <section id="skills" className="py-20 relative overflow-hidden">
+    <section id="skills" className="py-14 lg:py-20 relative overflow-hidden">
       <ThreeScene variant="icosahedron" particleCount={200} />
       <div className="absolute inset-0 grid-dots pointer-events-none" />
       <div className="absolute inset-0 pointer-events-none">
@@ -784,7 +784,7 @@ function Skills() {
           className="mb-10"
         >
           <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">02 / Skills</span>
-          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
+          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
             Tech{" "}
             <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#3b82f6] pr-[0.15em]">
               Stack
@@ -792,7 +792,7 @@ function Skills() {
           </h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-12 gap-10">
+        <div className="grid lg:grid-cols-12 gap-6 lg:gap-10">
           {/* Main content — 8 cols */}
           <div className="lg:col-span-8">
             {/* Tab strip */}
@@ -922,7 +922,7 @@ function Skills() {
             className="lg:col-span-4 flex flex-col gap-5"
           >
             {/* Stack Overview */}
-            <div className="border border-slate-800 bg-slate-900/50 backdrop-blur rounded-xl p-6">
+            <div className="border border-slate-800 bg-slate-900/50 backdrop-blur rounded-xl p-5">
               <p className="font-mono text-[11px] text-white/30 uppercase tracking-widest mb-4">Stack Overview</p>
               <div className="space-y-3">
                 {tabs.map((t) => {
@@ -938,7 +938,7 @@ function Skills() {
             </div>
 
             {/* Proficiency Distribution */}
-            <div className="border border-slate-800 bg-slate-900/50 backdrop-blur rounded-xl p-6">
+            <div className="border border-slate-800 bg-slate-900/50 backdrop-blur rounded-xl p-5">
               <p className="font-mono text-[11px] text-white/30 uppercase tracking-widest mb-4">Proficiency</p>
               <div className="space-y-4">
                 {[
@@ -970,7 +970,7 @@ function Projects() {
   const visible = filter === "all" ? PROJECTS : PROJECTS.filter((p) => p.category === filter);
 
   return (
-    <section id="projects" className="py-20 relative overflow-hidden">
+    <section id="projects" className="py-14 lg:py-20 relative overflow-hidden">
       <div className="absolute inset-0 translate-y-[-60px]">
         <ThreeScene variant="octahedron" particleCount={200} />
       </div>
@@ -989,7 +989,7 @@ function Projects() {
           className="mb-14"
         >
           <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">03 / Projects</span>
-          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
+          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
             Projects{" "}
             <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a855f7] to-[#00f5ff] pr-[0.15em]">
               I've Built
@@ -1068,8 +1068,8 @@ function Projects() {
                 </div>
 
                 {/* Body */}
-                <div className="p-6 flex flex-col flex-1">
-                  <h3 className="text-lg font-bold mb-2" style={{ color: proj.accent }}>
+                <div className="p-5 flex flex-col flex-1">
+                  <h3 className="text-base sm:text-lg font-bold mb-2" style={{ color: proj.accent }}>
                     {proj.name}
                   </h3>
                   <p className="text-white/48 text-base leading-relaxed mb-4 flex-1">{proj.description}</p>
@@ -1095,7 +1095,7 @@ function Projects() {
 
 function Journey() {
   return (
-    <section id="journey" className="py-20 relative overflow-hidden">
+    <section id="journey" className="py-14 lg:py-20 relative overflow-hidden">
       <div className="absolute inset-0 translate-y-[-60px]">
         <ThreeScene variant="torusKnot" particleCount={200} />
       </div>
@@ -1119,7 +1119,7 @@ function Journey() {
             className="mb-14 text-center"
           >
             <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">04 / Journey</span>
-            <h2 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
+            <h2 className="text-4xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
               My{" "}
               <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#a855f7] pr-[0.15em]">
                 Timeline
@@ -1235,7 +1235,7 @@ function Contact() {
   ];
 
   return (
-    <section id="contact" className="py-20 relative overflow-hidden">
+    <section id="contact" className="py-14 lg:py-20 relative overflow-hidden">
       <ThreeScene variant="dodecahedron" particleCount={200} />
       <div className="absolute inset-0 pointer-events-none grid-dots" />
       <div className="absolute inset-0 pointer-events-none">
@@ -1258,7 +1258,7 @@ function Contact() {
             className="mb-14"
           >
             <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">05 / Contact</span>
-            <h2 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
+            <h2 className="text-4xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
               Let's{" "}
               <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#a855f7] pr-[0.15em]">
                 Connect
@@ -1269,7 +1269,7 @@ function Contact() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="grid lg:grid-cols-12 gap-10"
+            className="grid lg:grid-cols-12 gap-6 lg:gap-10"
           >
           {/* Info — 6 cols */}
           <motion.div
@@ -1331,7 +1331,7 @@ function Contact() {
             <form
               ref={formRef}
               onSubmit={handleSubmit}
-              className="glass-md p-6 rounded-2xl"
+              className="glass-md p-5 rounded-2xl"
             >
               <div className="grid sm:grid-cols-2 gap-3 mb-3">
                 {[
