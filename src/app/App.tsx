@@ -643,7 +643,7 @@ function About() {
           className="mb-20"
         >
            <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase shimmer-text">01 / About</span>
-           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
             About{" "}
             <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a855f7] to-[#3b82f6] pr-[0.15em]">
               Myself
@@ -651,12 +651,17 @@ function About() {
           </h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-12 gap-10 items-start">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ staggerChildren: 0.06, delayChildren: 0.08 }}
+          className="grid lg:grid-cols-12 gap-10 items-start"
+        >
           {/* Bio + strengths — 7 cols */}
           <motion.div
-            initial={{ opacity: 0, x: -28 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             className="lg:col-span-7"
           >
             <p className="text-white/55 text-lg leading-relaxed mb-5">
@@ -678,9 +683,8 @@ function About() {
                 <motion.div
                   key={s.label}
                   initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.06 }}
                 >
                   <TiltCard className="relative glass p-5 rounded-xl cursor-default wobble-hover h-full group overflow-hidden">
                     <div
@@ -710,9 +714,8 @@ function About() {
 
           {/* Dense info widgets — 5 cols */}
           <motion.div
-            initial={{ opacity: 0, x: 28 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             className="lg:col-span-5 flex flex-col gap-5"
           >
             {/* Current Focus */}
@@ -753,7 +756,7 @@ function About() {
               </div>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -1105,32 +1108,40 @@ function Journey() {
 
       <div className="px-5 lg:px-16 xl:px-24">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mb-14 text-center"
+          transition={{ staggerChildren: 0.08 }}
         >
-          <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">04 / Journey</span>
-          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
-            My{" "}
-            <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#a855f7] pr-[0.15em]">
-              Timeline
-            </span>
-          </h2>
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-14 text-center"
+          >
+            <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">04 / Journey</span>
+            <h2 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
+              My{" "}
+              <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#a855f7] pr-[0.15em]">
+                Timeline
+              </span>
+            </h2>
+          </motion.div>
 
-        <div className="relative max-w-5xl mx-auto">
-          {/* Vertical line */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#00f5ff]/45 via-[#a855f7]/30 to-transparent hidden md:block" />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="relative max-w-5xl mx-auto"
+          >
+            {/* Vertical line */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#00f5ff]/45 via-[#a855f7]/30 to-transparent hidden md:block" />
 
-          <div className="space-y-8">
-            {TIMELINE.map((item, i) => (
-              <motion.div
-                key={item.year}
-                initial={{ opacity: 0, x: item.side === "left" ? -36 : 36 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
+            <div className="space-y-8">
+              {TIMELINE.map((item, i) => (
+                <motion.div
+                  key={item.year}
+                  initial={{ opacity: 0, x: item.side === "left" ? -36 : 36 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.08 }}
                 className={`relative flex flex-col md:flex-row items-center gap-4 ${
                   item.side === "right" ? "md:flex-row-reverse" : ""
                 }`}
@@ -1171,7 +1182,8 @@ function Journey() {
               </motion.div>
             ))}
           </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
@@ -1235,26 +1247,34 @@ function Contact() {
 
       <div className="px-5 lg:px-16 xl:px-24">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mb-14"
+          transition={{ staggerChildren: 0.07 }}
         >
-          <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">05 / Contact</span>
-          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
-            Let's{" "}
-            <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#a855f7] pr-[0.15em]">
-              Connect
-            </span>
-          </h2>
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-14"
+          >
+            <span className="font-mono text-[#00f5ff] text-xs tracking-[0.2em] uppercase">05 / Contact</span>
+            <h2 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight leading-[1.15] text-white mt-2 pt-2">
+              Let's{" "}
+              <span className="font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#a855f7] pr-[0.15em]">
+                Connect
+              </span>
+            </h2>
+          </motion.div>
 
-        <div className="grid lg:grid-cols-12 gap-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="grid lg:grid-cols-12 gap-10"
+          >
           {/* Info — 6 cols */}
           <motion.div
-            initial={{ opacity: 0, x: -28 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
             className="lg:col-span-6"
           >
             <p className="text-white/52 text-lg leading-relaxed mb-6">
@@ -1304,9 +1324,8 @@ function Contact() {
 
           {/* Form — 6 cols */}
           <motion.div
-            initial={{ opacity: 0, x: 28 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
             className="lg:col-span-6"
           >
             <form
@@ -1359,7 +1378,8 @@ function Contact() {
               </button>
             </form>
           </motion.div>
-        </div>
+        </motion.div>
+      </motion.div>
       </div>
 
       {/* Success Popup */}
