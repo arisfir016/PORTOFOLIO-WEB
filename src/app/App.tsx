@@ -565,11 +565,11 @@ function Hero() {
       {/* ===== MOBILE (redesigned) ===== */}
       <div className="block lg:hidden w-full min-h-screen relative overflow-hidden bg-black text-white px-6 pt-24 pb-12 flex flex-col justify-between">
         {/* Full bleed cinematic background */}
-        <div className="absolute left-0 right-0 z-0 overflow-hidden" style={{ top: '-35vh', height: '120vh' }}>
+        <div className="absolute left-0 right-0 z-0 overflow-hidden" style={{ top: '-10vh', height: '110vh' }}>
           <img
             src="/foto-profil.png"
             alt=""
-            className="w-full h-full object-cover object-top opacity-40 mix-blend-screen pointer-events-none"
+            className="w-full h-full object-cover object-[center_25%] opacity-40 mix-blend-screen pointer-events-none"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-60% to-black pointer-events-none" />
         </div>
