@@ -231,7 +231,7 @@ const PROJECTS = [
     description: "A custom personal portfolio built to showcase my technical projects. Focuses on interactive animations and clean, responsive UI.",
     tech: ["React", "Tailwind CSS", "Framer Motion"],
     grad: "from-purple-500/20 to-pink-700/20", accent: "#a855f7",
-    liveUrl: "#", sourceUrl: "#",
+    liveUrl: "https://arisfirmansyah.pages.dev", sourceUrl: "https://github.com/arisfir016/PORTOFOLIO-WEB.git",
   },
 ];
 
