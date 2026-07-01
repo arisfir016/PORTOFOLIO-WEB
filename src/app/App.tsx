@@ -217,18 +217,21 @@ const PROJECTS = [
     description: "A backend system designed to process sensor data from vehicle cameras. It focuses on object detection logic and logging driving events efficiently.",
     tech: ["Go", "Python", "OpenCV", "PostgreSQL"],
     grad: "from-blue-500/20 to-indigo-700/20", accent: "#3b82f6",
+    liveUrl: "#", sourceUrl: "#",
   },
   {
     id: 2, name: "NeoFin", category: "fullstack" as const,
     description: "A personal finance tracker with brutalist design that helps users record, monitor, and analyze income and expenses. Features interactive charts, category management, and local-first data storage for privacy.",
     tech: ["React", "TypeScript", "Tailwind CSS", "Zustand", "Recharts"],
     grad: "from-lime-400/20 to-pink-500/20", accent: "#D4FF3F",
+    liveUrl: "https://neofin-pearl.vercel.app", sourceUrl: "#",
   },
   {
     id: 3, name: "Portfolio Website", category: "frontend" as const,
     description: "A custom personal portfolio built to showcase my technical projects. Focuses on interactive animations and clean, responsive UI.",
     tech: ["React", "Tailwind CSS", "Framer Motion"],
     grad: "from-purple-500/20 to-pink-700/20", accent: "#a855f7",
+    liveUrl: "#", sourceUrl: "#",
   },
 ];
 
@@ -1246,15 +1249,17 @@ function Projects() {
                     style={{ background: `${proj.accent}10` }}
                   >
                     <a
-                      href="#"
-                      onClick={(e) => e.preventDefault()}
+                      href={proj.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium text-white border border-white/30 hover:bg-white/10 transition-colors backdrop-blur-sm"
                     >
                       <ExternalLink size={12} /> Live Demo
                     </a>
                     <a
-                      href="#"
-                      onClick={(e) => e.preventDefault()}
+                      href={proj.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium text-white border border-white/30 hover:bg-white/10 transition-colors backdrop-blur-sm"
                     >
                       <Github size={12} /> Source
