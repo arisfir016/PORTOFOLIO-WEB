@@ -1,15 +1,20 @@
-<<<<<<< HEAD
-# PORTOFOLIO-WEB
-=======
+# 🌐 PORTOFOLIO-WEB
 
-  # Premium Fullstack Developer Portfolio
+<p align="center">
+  <strong>Premium Fullstack Developer Portfolio</strong>
+</p>
 
-  This is a code bundle for Premium Fullstack Developer Portfolio. The original project is available at https://www.figma.com/design/HRAITkd8hQWoH6RJuTLUas/Premium-Fullstack-Developer-Portfolio.
+<p align="center">
+  <a href="https://arisfirmansyah.pages.dev/" target="_blank">
+    <img src="https://img.shields.io/badge/Live_Demo-🚀_Kunjungi_Web-blue?style=for-the-badge&logo=cloudflare" alt="Live Demo">
+  </a>
+</p>
 
-  ## Running the code
+---
 
-  Run `npm i` to install the dependencies.
+## 🚀 Deskripsi Proyek
+Ini adalah repositori kode resmi untuk **Premium Fullstack Developer Portfolio** yang saya rancang dan bangun dari nol. Proyek ini dibuat untuk menampilkan karya terbaik, keterampilan teknis, dan pengalaman saya dalam pengembangan web modern.
 
-  Run `npm run dev` to start the development server.
-  
->>>>>>> 8c8d92c (FIRST COMMIT)
+* **URL Live:** Web ini sudah aktif dan dapat diakses langsung di [arisfirmansyah.pages.dev](https://arisfirmansyah.pages.dev/).
+
+---
