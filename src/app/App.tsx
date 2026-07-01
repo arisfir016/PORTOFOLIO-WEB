@@ -224,7 +224,7 @@ const PROJECTS = [
     description: "A personal finance tracker with brutalist design that helps users record, monitor, and analyze income and expenses. Features interactive charts, category management, and local-first data storage for privacy.",
     tech: ["React", "TypeScript", "Tailwind CSS", "Zustand", "Recharts"],
     grad: "from-lime-400/20 to-pink-500/20", accent: "#D4FF3F",
-    liveUrl: "https://neofin-pearl.vercel.app", sourceUrl: "#",
+    liveUrl: "https://neofin-pearl.vercel.app", sourceUrl: "https://github.com/j0nsss/Persolnal-Finance-Tracker.git",
   },
   {
     id: 3, name: "Portfolio Website", category: "frontend" as const,
