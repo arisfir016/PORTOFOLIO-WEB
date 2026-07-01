@@ -219,10 +219,10 @@ const PROJECTS = [
     grad: "from-blue-500/20 to-indigo-700/20", accent: "#3b82f6",
   },
   {
-    id: 2, name: "Kalkulator HPP UMKM", category: "fullstack" as const,
-    description: "A comprehensive fullstack web application for computing Cost of Goods Sold (COGS) within micro, small, and medium enterprises (MSMEs). Designed to facilitate entrepreneurs in establishing optimal selling prices through systematic cost component analysis, encompassing raw materials, labor expenditure, and operational overhead allocation.",
-    tech: ["React", "Node.js", "PostgreSQL", "Tailwind CSS"],
-    grad: "from-emerald-500/20 to-teal-700/20", accent: "#10b981",
+    id: 2, name: "NeoFin", category: "fullstack" as const,
+    description: "A personal finance tracker with brutalist design that helps users record, monitor, and analyze income and expenses. Features interactive charts, category management, and local-first data storage for privacy.",
+    tech: ["React", "TypeScript", "Tailwind CSS", "Zustand", "Recharts"],
+    grad: "from-lime-400/20 to-pink-500/20", accent: "#D4FF3F",
   },
   {
     id: 3, name: "Portfolio Website", category: "frontend" as const,
